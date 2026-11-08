@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nestor Igna Jr. — Project Screenshots</title>
+<meta name="description" content="Screenshots of software projects by Nestor Z. Igna Jr., software developer in Puerto Princesa City, Palawan.">
+<style>
+  :root {
+    --bg: #f5f7fa; --card: #ffffff; --text: #16202c; --muted: #5b6878; --line: #e2e7ee;
+    --accent: #1a6fd1; --chip: #eef3fa;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0f141b; --card: #171e28; --text: #e6ebf2; --muted: #9aa7b8; --line: #263142; --accent: #5ea8ff; --chip: #1e2835; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  header { max-width: 1100px; margin: 0 auto; padding: 48px 16px 16px; }
+  h1 { font-size: 2rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--muted); }
+  header .links { margin-top: 10px; font-size: .95rem; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  nav { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+  nav div { max-width: 1100px; margin: 0 auto; padding: 10px 16px; display: flex; gap: 8px; overflow-x: auto; }
+  nav a { white-space: nowrap; background: var(--chip); padding: 6px 12px; border-radius: 999px; font-size: .9rem; color: var(--text); }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 16px 64px; }
+  section { padding-top: 40px; scroll-margin-top: 56px; }
+  section h2 { margin: 0; font-size: 1.4rem; }
+  .meta { color: var(--muted); font-size: .9rem; margin: 2px 0 8px; }
+  .summary { margin: 0 0 6px; max-width: 75ch; }
+  .tools { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 16px; padding: 0; list-style: none; }
+  .tools li { background: var(--chip); border-radius: 6px; padding: 2px 8px; font-size: .8rem; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .grid.phone { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+  figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  figure button { all: unset; cursor: zoom-in; display: block; width: 100%; }
+  figure img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: var(--line); }
+  .phone figure img { aspect-ratio: 9 / 19; }
+  figcaption { padding: 8px 10px; font-size: .85rem; color: var(--muted); }
+  .note { font-size: .8rem; color: var(--muted); margin-top: 10px; }
+  dialog { border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 94vh; }
+  dialog::backdrop { background: rgba(5, 8, 12, .85); }
+  dialog img { max-width: 96vw; max-height: 86vh; display: block; border-radius: 6px; }
+  dialog p { color: #dde4ee; text-align: center; margin: 8px 0 0; font-size: .9rem; }
+  footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 24px 16px 40px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Nestor Z. Igna Jr.</h1>
+  <p>Software Developer · VIVITO IT Solutions · Weather Observer, PAGASA-DOST · Puerto Princesa City, Palawan</p>
+  <p class="links"><a href="https://github.com/thorskii92">github.com/thorskii92</a> · <a href="https://linkedin.com/in/thorigna">linkedin.com/in/thorigna</a></p>
+</header>
+<nav aria-label="Projects"><div id="nav"></div></nav>
+<main id="projects"></main>
+<footer>Screenshots of working software. Personal data of real people has been blurred or left out.</footer>
+
+<dialog id="viewer"><img alt=""><p></p></dialog>
+
+<script>
+const projects = [
+  {
+    id: "poseidon", title: "POSEIDON — Water Utility Billing Platform", meta: "VIVITO IT Solutions · LGU water utilities",
+    summary: "Web rewrite of a desktop billing system: billing, collection, meter reading, GIS map of service connections, satellite collection laptops that sync with the main server, and an Android meter-reading app.",
+    tools: ["TypeScript", "React", "Mantine", "Node.js / Express", "PostgreSQL", "React Native (Expo)", "Google Cloud Vision", "MapLibre GL"],
+    dir: "poseidon", shots: [
+      ["dashboard", "Dashboard: collections, receivables and generated highlights"],
+      ["accounts", "Consumer accounts with filters (names blurred)"],
+      ["map", "GIS map of the service area, water system layers and drawing tools"],
+      ["collection", "Over-the-counter collection"],
+      ["reading", "Meter reading runs and billing schedule"],
+      ["forecast", "Demand forecast of billed consumption"],
+      ["nrw", "Non-revenue water balance"]
+    ]
+  },
+  {
+    id: "merqo", title: "Merqo — Multi-tenant Cloud Point-of-Sale", meta: "VIVITO IT Solutions · in development · demo data",
+    summary: "One point-of-sale for restaurants, retail shops and supermarkets, with industry features switched on per tenant: cashier terminal, back office, customer display and themes.",
+    tools: [".NET 10", "ASP.NET Core", "EF Core", "PostgreSQL 18 (Row-Level Security)", "React + TypeScript", "Tauri", "OpenTelemetry"],
+    dir: "merqo", shots: [
+      ["pos-sell-coffee", "Coffee shop terminal: menu and current sale"],
+      ["retail-pos-size-colour", "Retail: picking size and colour"],
+      ["grocery-pos-weight", "Grocery: items sold by weight"],
+      ["backoffice-sales", "Back office: sales"],
+      ["customer-display-order", "Customer-facing display"],
+      ["onboarding-business-type", "Sign-up: choosing the business type"],
+      ["pos-theme-midnight", "Terminal theme: Midnight"]
+    ]
+  },
+  {
+    id: "plots-web", title: "PLOTS Web — Weather Station Platform and Regional Server", meta: "PAGASA-DOST · Puerto Princesa Complex Station",
+    summary: "Web version of the station's observation and transmission system, with a regional server, GTS data feed, tropical cyclone tracking, hazard feeds and forecasting tools.",
+    tools: ["Laravel 13 (PHP 8.4)", "React 19", "TypeScript", "Vite", "TanStack Query", "PostgreSQL 18", "MapLibre GL", "Cloudflare Tunnel"],
+    dir: "plots-web", shots: [
+      ["dashboard", "Station dashboard with the generated weather outlook"],
+      ["observation", "Observation Form 1001-AB (hourly synoptic entry)"],
+      ["forecasting", "Forecasting: isobars and wind barbs from model guidance"],
+      ["cyclones", "Tropical cyclones: JMA track with ensemble forecasts"],
+      ["hazards", "Hazards: volcanoes and earthquakes"],
+      ["weather-charts", "Barograph and hygrothermograph charts"],
+      ["flood", "Flood: rain gauge against warning levels"],
+      ["astronomy", "Astronomy: sun, twilight and moon tables"]
+    ]
+  },
+  {
+    id: "cert-portal", title: "Weather Certification Request Portal", meta: "PAGASA Visayas Regional Services Division · live site",
+    summary: "Public site for requesting weather certifications, with tracking codes, payment proof upload, and staff pages for review.",
+    tools: ["React", "TypeScript", "Cloudflare Pages & Workers", "Neon PostgreSQL", "Cloudflare R2", "Turnstile"],
+    dir: "cert-portal", shots: [
+      ["request", "New request: privacy consent and request form"],
+      ["status", "Follow a request with a tracking code"],
+      ["staff-login", "Staff sign-in"]
+    ]
+  },
+  {
+    id: "skyobs", title: "SkyObs — Mobile Observer App", meta: "PAGASA-DOST · Android",
+    summary: "App for observers to send coded observations by SMS through the office phone, with offline storage and sunshine card recording.",
+    tools: ["React Native (Expo)", "TypeScript", "NativeWind", "SQLite"],
+    dir: "skyobs", phone: true, shots: []
+  },
+  {
+    id: "cryptoman", title: "CryptoMan — AI Paper-Trading Sandbox", meta: "Personal project · simulated money",
+    summary: "Crypto trading simulator with live prices, indicators, limit, stop-loss and trailing-stop orders, strategy bots, backtesting and an AI bot that asks Claude for buy/sell/hold decisions.",
+    tools: ["Next.js", "TypeScript", "Claude API", "Zod", "SQLite", "Lightweight Charts"],
+    dir: "cryptoman", shots: [
+      ["indicators", "Chart with indicators and a trailing stop"],
+      ["bots", "Strategy bots"],
+      ["backtest", "Backtesting"],
+      ["ai-form", "AI trading bot settings"]
+    ]
+  },
+  {
+    id: "agent-office", title: "Agent Office — Claude Code Activity Visualizer", meta: "Personal project",
+    summary: "A 3D office that shows Claude Code sessions live: hook events drive a team of agents working at their desks.",
+    tools: ["Node.js", "Three.js", "Claude Code hooks"],
+    dir: "agent-office", shots: [["office-3d", "The office during a demo session"]]
+  }
+];
+
+const el = (tag, props = {}, ...kids) => { const n = Object.assign(document.createElement(tag), props); n.append(...kids); return n; };
+const nav = document.getElementById("nav"), main = document.getElementById("projects");
+const viewer = document.getElementById("viewer");
+viewer.addEventListener("click", () => viewer.close());
+
+for (const p of projects.filter(p => p.shots.length)) {
+  nav.append(el("a", { href: "#" + p.id, textContent: p.title.split(" — ")[0] }));
+  const grid = el("div", { className: "grid" + (p.phone ? " phone" : "") });
+  for (const [file, caption] of p.shots) {
+    const src = `img/${p.dir}/${file}.png`;
+    const img = el("img", { src, alt: caption, loading: "lazy" });
+    const btn = el("button", { ariaLabel: "Open " + caption }, img);
+    btn.addEventListener("click", () => {
+      viewer.querySelector("img").src = src;
+      viewer.querySelector("img").alt = caption;
+      viewer.querySelector("p").textContent = caption;
+      viewer.showModal();
+    });
+    grid.append(el("figure", {}, btn, el("figcaption", { textContent: caption })));
+  }
+  main.append(el("section", { id: p.id },
+    el("h2", { textContent: p.title }),
+    el("p", { className: "meta", textContent: p.meta }),
+    el("p", { className: "summary", textContent: p.summary }),
+    el("ul", { className: "tools" }, ...p.tools.map(t => el("li", { textContent: t }))),
+    grid));
+}
+</script>
+</body>
+</html>
