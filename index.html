@@ -3,168 +3,756 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nestor Igna Jr. — Project Screenshots</title>
-<meta name="description" content="Screenshots of software projects by Nestor Z. Igna Jr., software developer in Puerto Princesa City, Palawan.">
+<title>Nestor Igna Jr. · Software developer, Palawan</title>
+<meta name="description" content="Nestor Z. Igna Jr. builds billing, weather and point-of-sale systems for local governments and businesses in the Philippines, from Puerto Princesa City, Palawan.">
+<meta property="og:title" content="Nestor Igna Jr. · Software developer, Palawan">
+<meta property="og:description" content="Billing, weather and point-of-sale systems for local governments and businesses in the Philippines.">
+<meta property="og:image" content="img/poseidon/map.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
+  /* Barograph ink over Palawan sea: the page reads like an observer's record,
+     because the person it describes is one. */
   :root {
-    --bg: #f5f7fa; --card: #ffffff; --text: #16202c; --muted: #5b6878; --line: #e2e7ee;
-    --accent: #1a6fd1; --chip: #eef3fa;
+    --paper: #eef2f3;
+    --grid: #d6dfe3;
+    --ink: #13304a;
+    --muted: #586a78;
+    --pen: #c0392b;
+    --sea: #1f7a8c;
+    --card: #ffffff;
+    --shadow: 0 1px 0 #c9d4d9;
+    /* the sea: lagoon water, sunlight on the sand, and the shade of a ripple */
+    --water-top: #eef6f6;
+    --water-bottom: #d2e9ea;
+    --glint: 255 255 255;
+    --glint-a: .55;
+    --deep: 31 122 140;
+    --deep-a: .3;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #0f141b; --card: #171e28; --text: #e6ebf2; --muted: #9aa7b8; --line: #263142; --accent: #5ea8ff; --chip: #1e2835; }
+    :root {
+      --paper: #0e1d2b;
+      --grid: #1b3042;
+      --ink: #e4edf3;
+      --muted: #93a7b6;
+      --pen: #ff6f5e;
+      --sea: #4fb8c9;
+      --card: #132637;
+      --shadow: 0 1px 0 #08131d;
+      --water-top: #0e1d2b;
+      --water-bottom: #0a2a37;
+      --glint: 79 184 201;
+      --glint-a: .11;
+      --deep: 2 8 14;
+      --deep-a: .6;
+    }
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  header { max-width: 1100px; margin: 0 auto; padding: 48px 16px 16px; }
-  h1 { font-size: 2rem; margin: 0 0 4px; letter-spacing: -0.01em; }
-  header p { margin: 0; color: var(--muted); }
-  header .links { margin-top: 10px; font-size: .95rem; }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  nav { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
-  nav div { max-width: 1100px; margin: 0 auto; padding: 10px 16px; display: flex; gap: 8px; overflow-x: auto; }
-  nav a { white-space: nowrap; background: var(--chip); padding: 6px 12px; border-radius: 999px; font-size: .9rem; color: var(--text); }
-  main { max-width: 1100px; margin: 0 auto; padding: 8px 16px 64px; }
-  section { padding-top: 40px; scroll-margin-top: 56px; }
-  section h2 { margin: 0; font-size: 1.4rem; }
-  .meta { color: var(--muted); font-size: .9rem; margin: 2px 0 8px; }
-  .summary { margin: 0 0 6px; max-width: 75ch; }
-  .tools { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 16px; padding: 0; list-style: none; }
-  .tools li { background: var(--chip); border-radius: 6px; padding: 2px 8px; font-size: .8rem; color: var(--muted); }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
-  .grid.phone { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
-  figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-  figure button { all: unset; cursor: zoom-in; display: block; width: 100%; }
-  figure img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: var(--line); }
-  .phone figure img { aspect-ratio: 9 / 19; }
-  figcaption { padding: 8px 10px; font-size: .85rem; color: var(--muted); }
-  .note { font-size: .8rem; color: var(--muted); margin-top: 10px; }
-  dialog { border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 94vh; }
-  dialog::backdrop { background: rgba(5, 8, 12, .85); }
-  dialog img { max-width: 96vw; max-height: 86vh; display: block; border-radius: 6px; }
-  dialog p { color: #dde4ee; text-align: center; margin: 8px 0 0; font-size: .9rem; }
-  footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 24px 16px 40px; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background-color: var(--water-top);
+    font-family: "Archivo", system-ui, sans-serif;
+    font-variation-settings: "wdth" 100;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  a { color: var(--sea); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--pen); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- top bar ---------- */
+  .top {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding: 20px 0;
+    font-size: 15px;
+  }
+  .top strong { font-variation-settings: "wdth" 75; font-weight: 800; letter-spacing: .01em; font-size: 17px; }
+  .top nav { display: flex; gap: 18px; flex-wrap: wrap; }
+  .top nav a { color: var(--ink); text-decoration: none; }
+  .top nav a:hover { color: var(--pen); }
+
+  /* ---------- hero: the observation ---------- */
+  .hero { padding: 48px 0 24px; }
+  .hero-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 32px;
+  }
+  .portrait {
+    display: block;
+    width: clamp(160px, 24vw, 300px);
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 10px;
+    border: 1px solid var(--grid);
+    background: #fff;
+    box-shadow: var(--shadow);
+  }
+  .hero h1 {
+    margin: 0;
+    font-variation-settings: "wdth" 62;
+    font-weight: 800;
+    font-size: clamp(64px, 13vw, 176px);
+    line-height: .86;
+    letter-spacing: -.01em;
+    text-transform: uppercase;
+  }
+  .hero .role {
+    margin: 18px 0 0;
+    max-width: 34ch;
+    font-size: clamp(20px, 2.4vw, 26px);
+    line-height: 1.35;
+    font-variation-settings: "wdth" 90;
+  }
+  .metar {
+    margin: 40px 0 0;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 6px;
+    padding: 18px 20px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: clamp(14px, 1.7vw, 19px);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+  .metar .group {
+    border: 0; background: none; color: inherit; font: inherit;
+    padding: 0 2px; margin: 0; cursor: pointer; border-radius: 3px;
+  }
+  .metar .group:hover, .metar .group[aria-pressed="true"] { background: var(--pen); color: #fff; }
+  .metar .caret { display: inline-block; width: .6em; background: var(--paper); animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .decode {
+    display: grid;
+    /* nine groups: three by three, so no row is left half-empty */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin: 0;
+    background: var(--grid);
+    border: 1px solid var(--grid);
+    border-top: 0;
+    border-radius: 0 0 6px 6px;
+    overflow: hidden;
+  }
+  .decode div { background: var(--card); padding: 12px 16px; transition: background .2s; }
+  .decode div.lit { background: color-mix(in srgb, var(--pen) 14%, var(--card)); }
+  .decode dt { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--pen); font-size: 14px; }
+  .decode dd { margin: 2px 0 0; font-size: 15px; line-height: 1.4; }
+  .hint { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
+
+  /* the barograph trace under the hero */
+  .trace { display: block; width: 100%; height: 90px; margin-top: 28px; }
+  .trace path { fill: none; stroke: var(--pen); stroke-width: 2.2; stroke-linecap: round; }
+  .trace .axis { stroke: var(--muted); stroke-width: 1; opacity: .5; }
+  .trace text { fill: var(--muted); font: 12px "Archivo", sans-serif; }
+
+  /* the sea behind the whole page; cards and the METAR sit on top of it */
+  .sea {
+    position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
+    background: linear-gradient(180deg, var(--water-top), var(--water-bottom));
+  }
+  @media (prefers-reduced-motion: reduce) { .sea-hint { display: none; } }
+
+  /* ---------- sections ---------- */
+  section { padding: 72px 0 8px; }
+  h2 {
+    margin: 0 0 8px;
+    font-variation-settings: "wdth" 70;
+    font-weight: 800;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1;
+  }
+  .lede { margin: 0 0 32px; max-width: 62ch; color: var(--muted); font-size: 18px; }
+
+  /* ---------- work: one row per field ---------- */
+  .field { margin-top: 44px; }
+  .field > h3 {
+    margin: 0 0 16px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .field > h3::after { content: ""; flex: 1; height: 1px; background: var(--grid); }
+  .project {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 32px;
+    align-items: center;
+    padding: 24px;
+    background: var(--card);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+  }
+  .project.flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+  .project.flip .shot { order: 2; }
+  .project.lead { padding: 28px; }
+  .shot {
+    display: block;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--grid);
+    background: var(--paper);
+    aspect-ratio: 16 / 10;
+  }
+  .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+  .project h4 {
+    margin: 0 0 4px;
+    font-variation-settings: "wdth" 80;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 1.1;
+  }
+  .project .for { margin: 0 0 12px; color: var(--sea); font-weight: 600; font-size: 15px; }
+  .project p { margin: 0 0 14px; }
+  .project ul.points { margin: 0 0 14px; padding-left: 18px; }
+  .project ul.points li { margin-bottom: 4px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .tags li { font-size: 13px; padding: 3px 9px; border-radius: 999px; background: var(--paper); border: 1px solid var(--grid); }
+  .small-projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .small-projects .project { grid-template-columns: 1fr; gap: 16px; margin: 0; align-items: start; }
+  .small-projects .project h4 { font-size: 23px; }
+  .more { margin-top: 20px; font-weight: 600; }
+
+  /* ---------- stack ---------- */
+  /* six groups: three by two */
+  .stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 980px) { .stack { grid-template-columns: repeat(2, 1fr); } }
+  .layer { background: var(--card); border-radius: 10px; padding: 20px; box-shadow: var(--shadow); }
+  .layer h3 { margin: 0 0 4px; font-size: 19px; font-variation-settings: "wdth" 85; }
+  .layer p { margin: 0 0 14px; color: var(--muted); font-size: 14px; line-height: 1.45; }
+  .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; margin: 0; padding: 0; list-style: none; }
+  .tools li { display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 1.2; }
+  .tools img { width: 22px; height: 22px; flex: none; }
+  .tools .glyph {
+    width: 22px; height: 22px; flex: none; border-radius: 5px;
+    background: var(--ink); color: var(--paper);
+    font: 700 10px/22px "JetBrains Mono", monospace; text-align: center;
+  }
+  @media (prefers-color-scheme: dark) {
+    .tools img.mono { filter: invert(1); }
+  }
+
+  /* ---------- record (a real sequence, so it is a timeline) ---------- */
+  .record { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--pen); }
+  .record li { position: relative; padding: 0 0 30px 28px; }
+  .record li::before {
+    content: ""; position: absolute; left: -7px; top: 8px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--paper); border: 2px solid var(--pen);
+  }
+  .record .when { font-family: "JetBrains Mono", monospace; font-size: 14px; color: var(--pen); }
+  .record h3 { margin: 2px 0 2px; font-size: 21px; font-variation-settings: "wdth" 85; }
+  .record .org { margin: 0 0 6px; color: var(--muted); }
+  .record p { margin: 0; max-width: 68ch; }
+
+  /* ---------- contact ---------- */
+  .contact {
+    margin: 72px 0 0;
+    padding: 48px 0 56px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .contact h2 { color: var(--paper); }
+  .contact p { max-width: 56ch; margin: 0 0 24px; color: color-mix(in srgb, var(--paper) 80%, transparent); font-size: 18px; }
+  .contact .links { display: flex; flex-wrap: wrap; gap: 12px; }
+  .contact .links a {
+    color: var(--ink); background: var(--paper); text-decoration: none;
+    padding: 12px 18px; border-radius: 8px; font-weight: 700;
+  }
+  .contact .links a:hover { background: var(--pen); color: #fff; }
+  .contact a:focus-visible { outline-color: var(--paper); }
+  footer { padding: 18px 0 28px; background: var(--ink); color: var(--muted); font-size: 13px; }
+
+  /* ---------- small screens ---------- */
+  @media (max-width: 760px) {
+    .decode, .stack { grid-template-columns: 1fr; }
+    /* on phones the photo sits above the name instead of beside it */
+    .hero-head { grid-template-columns: 1fr; gap: 20px; }
+    .portrait { order: -1; width: 120px; }
+    .project, .project.flip { grid-template-columns: 1fr; padding: 18px; gap: 18px; }
+    .project.flip .shot { order: 0; }
+    /* the hero already says the name; the bar keeps only the links */
+    .top strong { display: none; }
+    .top nav { gap: 16px; }
+    .decode div { padding: 10px 14px; }
+    section { padding-top: 56px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .metar .caret { animation: none; }
+  }
 </style>
 </head>
 <body>
-<header>
-  <h1>Nestor Z. Igna Jr.</h1>
-  <p>Software Developer · VIVITO IT Solutions · Weather Observer, PAGASA-DOST · Puerto Princesa City, Palawan</p>
-  <p class="links"><a href="https://github.com/thorskii92">github.com/thorskii92</a> · <a href="https://linkedin.com/in/thorigna">linkedin.com/in/thorigna</a></p>
-</header>
-<nav aria-label="Projects"><div id="nav"></div></nav>
-<main id="projects"></main>
-<footer>Screenshots of working software. Personal data of real people has been blurred or left out.</footer>
+<canvas class="sea" id="sea" aria-hidden="true"></canvas>
 
-<dialog id="viewer"><img alt=""><p></p></dialog>
+<div class="wrap">
+  <header class="top">
+    <strong>NESTOR IGNA JR.</strong>
+    <nav aria-label="Sections">
+      <a href="#work">Work</a>
+      <a href="#stack">Stack</a>
+      <a href="#record">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="hero-head">
+      <div>
+        <h1>Nestor<br>Igna Jr.</h1>
+        <p class="role">Software developer in Puerto Princesa City, Palawan. I build billing, weather and point-of-sale systems that local governments and small businesses run every day.</p>
+      </div>
+      <img class="portrait" src="img/nestor.png" width="300" height="300" alt="Nestor Igna Jr. in a PAGASA shirt">
+    </div>
+
+    <!-- A weather report written about me, in the code I've sent as an observer
+         since 2016. Each group can be tapped to read what it means. -->
+    <div class="metar" id="metar" aria-label="My profile written as a METAR weather report"></div>
+    <dl class="decode" id="decode"></dl>
+    <p class="hint">I'm also a PAGASA weather observer, so here's my profile as a METAR. Tap a group to read it.</p>
+    <p class="hint sea-hint">The background is the sea off Palawan. Move your mouse through it, or tap, to make ripples.</p>
+
+    <svg class="trace" viewBox="0 0 1000 90" preserveAspectRatio="none" aria-hidden="true">
+      <line class="axis" x1="0" y1="80" x2="1000" y2="80"/>
+      <path id="tracePath" d="M0,62 C60,60 90,66 140,58 S220,40 270,46 S350,64 400,52 S470,22 530,30 S610,48 660,36 S740,14 800,20 S900,30 1000,10"/>
+      <text x="0" y="76">2014</text><text x="955" y="76">today</text>
+    </svg>
+  </div>
+
+  <section id="work" aria-labelledby="work-h">
+    <h2 id="work-h">What I build</h2>
+    <p class="lede">Systems for people whose work can't stop when the internet does: water utilities on islands, weather stations, shops. Most of them keep working offline and catch up when the line comes back.</p>
+
+    <div class="field">
+      <h3>Local government water utilities</h3>
+      <article class="project lead">
+        <a class="shot" href="projects.html#poseidon"><img src="img/poseidon/map.png" alt="POSEIDON's GIS map of a water service area" loading="lazy"></a>
+        <div>
+          <h4>POSEIDON</h4>
+          <p class="for">Billing and service platform for municipal waterworks</p>
+          <p>A web rewrite of the desktop billing system I first built in 2017, now running a municipal water office in Palawan.</p>
+          <ul class="points">
+            <li>Billing, collection, meter reading and a GIS map of every connection</li>
+            <li>Collection laptops for remote barangays that sync with the main server</li>
+            <li>An Android app for meter readers, and a residents' app on Google Play</li>
+          </ul>
+          <ul class="tags"><li>TypeScript</li><li>React</li><li>Node.js</li><li>PostgreSQL</li><li>React Native</li><li>MapLibre</li><li>Cloudflare</li></ul>
+        </div>
+      </article>
+    </div>
+
+    <div class="field">
+      <h3>Weather and public service</h3>
+      <article class="project flip">
+        <a class="shot" href="projects.html#plots-web"><img src="img/plots-web/cyclones.png" alt="PLOTS Web tracking a tropical cyclone with ensemble forecasts" loading="lazy"></a>
+        <div>
+          <h4>PLOTS Web</h4>
+          <p class="for">Weather station platform, PAGASA Puerto Princesa</p>
+          <p>The station's observation and transmission system on the web, with a regional server, tropical cyclone tracking, hazard feeds and forecasting tools.</p>
+          <ul class="tags"><li>Laravel</li><li>PHP</li><li>React</li><li>TypeScript</li><li>PostgreSQL</li><li>MapLibre</li></ul>
+        </div>
+      </article>
+      <div class="small-projects">
+        <article class="project">
+          <a class="shot" href="projects.html#cert-portal"><img src="img/cert-portal/request.png" alt="Weather certification request form" loading="lazy"></a>
+          <div>
+            <h4>Weather certification portal</h4>
+            <p class="for">PAGASA Visayas regional office, live</p>
+            <p>The public requests weather certifications online, uploads payment proof and follows the request with a tracking code.</p>
+            <ul class="tags"><li>React</li><li>Cloudflare Workers</li><li>Neon</li><li>R2</li></ul>
+          </div>
+        </article>
+        <article class="project">
+          <div>
+            <h4>SkyObs</h4>
+            <p class="for">Android app for weather observers</p>
+            <p>Observers send coded observations by SMS through the office phone, with offline storage and sunshine card recording.</p>
+            <ul class="tags"><li>React Native</li><li>Expo</li><li>SQLite</li></ul>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="field">
+      <h3>Business and experiments</h3>
+      <article class="project">
+        <a class="shot" href="projects.html#merqo"><img src="img/merqo/pos-sell-coffee.png" alt="Merqo point-of-sale terminal for a coffee shop" loading="lazy"></a>
+        <div>
+          <h4>Merqo</h4>
+          <p class="for">Cloud point-of-sale, in development</p>
+          <p>One point-of-sale for restaurants, retail shops and supermarkets, with each business type's features switched on per shop: cashier terminal, back office and customer display.</p>
+          <ul class="tags"><li>.NET</li><li>ASP.NET Core</li><li>PostgreSQL</li><li>React</li><li>Tauri</li></ul>
+        </div>
+      </article>
+      <div class="small-projects">
+        <article class="project">
+          <a class="shot" href="projects.html#cryptoman"><img src="img/cryptoman/indicators.png" alt="CryptoMan chart with indicators and a trailing stop" loading="lazy"></a>
+          <div>
+            <h4>CryptoMan</h4>
+            <p class="for">Paper-trading sandbox, simulated money</p>
+            <p>Live prices, strategy bots, backtesting, and a bot that asks Claude whether to buy, sell or hold.</p>
+            <ul class="tags"><li>Next.js</li><li>Claude API</li><li>SQLite</li></ul>
+          </div>
+        </article>
+        <article class="project">
+          <a class="shot" href="projects.html#agent-office"><img src="img/agent-office/office-3d.png" alt="A 3D office showing AI coding agents at work" loading="lazy"></a>
+          <div>
+            <h4>Agent Office</h4>
+            <p class="for">3D view of AI coding sessions</p>
+            <p>Claude Code's activity drawn live as a team of agents working at their desks.</p>
+            <ul class="tags"><li>Node.js</li><li>Three.js</li></ul>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <p class="more"><a href="projects.html">See all the screenshots</a></p>
+  </section>
+
+  <section id="stack" aria-labelledby="stack-h">
+    <h2 id="stack-h">What I use</h2>
+    <p class="lede">Grouped by where it runs. Everything here is in a project above, not just on a list.</p>
+    <div class="stack" id="stackGrid"></div>
+  </section>
+
+  <section id="record" aria-labelledby="record-h">
+    <h2 id="record-h">Experience</h2>
+    <p class="lede">Ten years reading the sky for PAGASA, and nearly as long writing software for the people around me.</p>
+    <ol class="record">
+      <li>
+        <span class="when">Now</span>
+        <h3>Software developer</h3>
+        <p class="org">Vivito IT Solutions, Puerto Princesa City</p>
+        <p>POSEIDON for municipal water utilities, Merqo, and web and mobile apps for local offices and businesses.</p>
+      </li>
+      <li>
+        <span class="when">2016 – now</span>
+        <h3>Weather observer</h3>
+        <p class="org">PAGASA-DOST, Puerto Princesa City</p>
+        <p>Surface, aviation and upper-air observations for forecasts and weather maps, and media interviews on weather and climate. I also build the station's own software.</p>
+      </li>
+      <li>
+        <span class="when">2017 – 2022</span>
+        <h3>Software developer</h3>
+        <p class="org">Thor Software Development and Computer Services</p>
+        <p>Billing, collection and meter reading systems for government water utilities across Palawan, plus inventory, payroll and biometric attendance systems.</p>
+      </li>
+      <li>
+        <span class="when">2015 – 2016</span>
+        <h3>Technical services engineer</h3>
+        <p class="org">I-Tech Global Business Solutions, Robinsons Place Palawan</p>
+        <p>Hardware, software and network support, and keeping every tenant connected to the mall server for end-of-day sales.</p>
+      </li>
+      <li>
+        <span class="when">2011 – 2015</span>
+        <h3>BS Information Technology</h3>
+        <p class="org">STI College Puerto Princesa</p>
+        <p>Including an internship as programmer and technical support at International Payments Processing.</p>
+      </li>
+    </ol>
+  </section>
+</div>
+
+<div class="contact" id="contact">
+  <div class="wrap">
+    <h2>Need a system built?</h2>
+    <p>I work with local governments, offices and small businesses in the Philippines. Tell me what your team does by hand today.</p>
+    <div class="links">
+      <a href="mailto:nestorigna92@outlook.com">Email me</a>
+      <a href="https://linkedin.com/in/thorigna">LinkedIn</a>
+      <a href="https://github.com/thorskii92">GitHub</a>
+      <a href="https://vivito.tech">Vivito IT Solutions</a>
+    </div>
+  </div>
+</div>
+<footer><div class="wrap">Nestor Z. Igna Jr. · Puerto Princesa City, Palawan · Screenshots show demo data; real people's details are blurred or left out.</div></footer>
 
 <script>
-const projects = [
-  {
-    id: "poseidon", title: "POSEIDON — Water Utility Billing Platform", meta: "VIVITO IT Solutions · LGU water utilities",
-    summary: "Web rewrite of a desktop billing system: billing, collection, meter reading, GIS map of service connections, satellite collection laptops that sync with the main server, and an Android meter-reading app.",
-    tools: ["TypeScript", "React", "Mantine", "Node.js / Express", "PostgreSQL", "React Native (Expo)", "Google Cloud Vision", "MapLibre GL"],
-    dir: "poseidon", shots: [
-      ["dashboard", "Dashboard: collections, receivables and generated highlights"],
-      ["accounts", "Consumer accounts with filters (names blurred)"],
-      ["map", "GIS map of the service area, water system layers and drawing tools"],
-      ["collection", "Over-the-counter collection"],
-      ["reading", "Meter reading runs and billing schedule"],
-      ["forecast", "Demand forecast of billed consumption"],
-      ["nrw", "Non-revenue water balance"]
-    ]
-  },
-  {
-    id: "merqo", title: "Merqo — Multi-tenant Cloud Point-of-Sale", meta: "VIVITO IT Solutions · in development · demo data",
-    summary: "One point-of-sale for restaurants, retail shops and supermarkets, with industry features switched on per tenant: cashier terminal, back office, customer display and themes.",
-    tools: [".NET 10", "ASP.NET Core", "EF Core", "PostgreSQL 18 (Row-Level Security)", "React + TypeScript", "Tauri", "OpenTelemetry"],
-    dir: "merqo", shots: [
-      ["pos-sell-coffee", "Coffee shop terminal: menu and current sale"],
-      ["retail-pos-size-colour", "Retail: picking size and colour"],
-      ["grocery-pos-weight", "Grocery: items sold by weight"],
-      ["backoffice-sales", "Back office: sales"],
-      ["customer-display-order", "Customer-facing display"],
-      ["onboarding-business-type", "Sign-up: choosing the business type"],
-      ["pos-theme-midnight", "Terminal theme: Midnight"]
-    ]
-  },
-  {
-    id: "plots-web", title: "PLOTS Web — Weather Station Platform and Regional Server", meta: "PAGASA-DOST · Puerto Princesa Complex Station",
-    summary: "Web version of the station's observation and transmission system, with a regional server, GTS data feed, tropical cyclone tracking, hazard feeds and forecasting tools.",
-    tools: ["Laravel 13 (PHP 8.4)", "React 19", "TypeScript", "Vite", "TanStack Query", "PostgreSQL 18", "MapLibre GL", "Cloudflare Tunnel"],
-    dir: "plots-web", shots: [
-      ["dashboard", "Station dashboard with the generated weather outlook"],
-      ["observation", "Observation Form 1001-AB (hourly synoptic entry)"],
-      ["forecasting", "Forecasting: isobars and wind barbs from model guidance"],
-      ["cyclones", "Tropical cyclones: JMA track with ensemble forecasts"],
-      ["hazards", "Hazards: volcanoes and earthquakes"],
-      ["weather-charts", "Barograph and hygrothermograph charts"],
-      ["flood", "Flood: rain gauge against warning levels"],
-      ["astronomy", "Astronomy: sun, twilight and moon tables"]
-    ]
-  },
-  {
-    id: "cert-portal", title: "Weather Certification Request Portal", meta: "PAGASA Visayas Regional Services Division · live site",
-    summary: "Public site for requesting weather certifications, with tracking codes, payment proof upload, and staff pages for review.",
-    tools: ["React", "TypeScript", "Cloudflare Pages & Workers", "Neon PostgreSQL", "Cloudflare R2", "Turnstile"],
-    dir: "cert-portal", shots: [
-      ["request", "New request: privacy consent and request form"],
-      ["status", "Follow a request with a tracking code"],
-      ["staff-login", "Staff sign-in"]
-    ]
-  },
-  {
-    id: "skyobs", title: "SkyObs — Mobile Observer App", meta: "PAGASA-DOST · Android",
-    summary: "App for observers to send coded observations by SMS through the office phone, with offline storage and sunshine card recording.",
-    tools: ["React Native (Expo)", "TypeScript", "NativeWind", "SQLite"],
-    dir: "skyobs", phone: true, shots: []
-  },
-  {
-    id: "cryptoman", title: "CryptoMan — AI Paper-Trading Sandbox", meta: "Personal project · simulated money",
-    summary: "Crypto trading simulator with live prices, indicators, limit, stop-loss and trailing-stop orders, strategy bots, backtesting and an AI bot that asks Claude for buy/sell/hold decisions.",
-    tools: ["Next.js", "TypeScript", "Claude API", "Zod", "SQLite", "Lightweight Charts"],
-    dir: "cryptoman", shots: [
-      ["indicators", "Chart with indicators and a trailing stop"],
-      ["bots", "Strategy bots"],
-      ["backtest", "Backtesting"],
-      ["ai-form", "AI trading bot settings"]
-    ]
-  },
-  {
-    id: "agent-office", title: "Agent Office — Claude Code Activity Visualizer", meta: "Personal project",
-    summary: "A 3D office that shows Claude Code sessions live: hook events drive a team of agents working at their desks.",
-    tools: ["Node.js", "Three.js", "Claude Code hooks"],
-    dir: "agent-office", shots: [["office-3d", "The office during a demo session"]]
+  /* ---- the METAR: my profile in the code I send as an observer ---- */
+  const groups = [
+    ["METAR", "Report type", "A routine weather report, the kind I send every hour."],
+    ["RPVP", "Station", "Puerto Princesa, Palawan. Where I work and build."],
+    ["2017Z", "Since", "Writing software for local government since 2017."],
+    ["10Y/WX", "Observer", "Ten years as a PAGASA weather observer."],
+    ["TS REACT PGSQL", "Now building with", "TypeScript, React and PostgreSQL."],
+    ["NET VB CS", "Also fluent in", ".NET, VB.NET and C#, where it started."],
+    ["9999", "Visibility", "Unlimited: works offline, syncs when the line is back."],
+    ["LGU/WTR/WX/POS", "Fields", "Water utilities, weather stations, point-of-sale."],
+    ["NOSIG", "Outlook", "No significant change: still building."],
+  ];
+  const metar = document.getElementById("metar");
+  const decode = document.getElementById("decode");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const rows = groups.map(([code, name, text], i) => {
+    const row = document.createElement("div");
+    row.innerHTML = `<dt>${code}</dt><dd><strong>${name}.</strong> ${text}</dd>`;
+    decode.append(row);
+    return row;
+  });
+
+  function light(i) {
+    metar.querySelectorAll(".group").forEach((b, k) => b.setAttribute("aria-pressed", String(k === i)));
+    rows.forEach((r, k) => r.classList.toggle("lit", k === i));
   }
-];
 
-const el = (tag, props = {}, ...kids) => { const n = Object.assign(document.createElement(tag), props); n.append(...kids); return n; };
-const nav = document.getElementById("nav"), main = document.getElementById("projects");
-const viewer = document.getElementById("viewer");
-viewer.addEventListener("click", () => viewer.close());
-
-for (const p of projects.filter(p => p.shots.length)) {
-  nav.append(el("a", { href: "#" + p.id, textContent: p.title.split(" — ")[0] }));
-  const grid = el("div", { className: "grid" + (p.phone ? " phone" : "") });
-  for (const [file, caption] of p.shots) {
-    const src = `img/${p.dir}/${file}.png`;
-    const img = el("img", { src, alt: caption, loading: "lazy" });
-    const btn = el("button", { ariaLabel: "Open " + caption }, img);
-    btn.addEventListener("click", () => {
-      viewer.querySelector("img").src = src;
-      viewer.querySelector("img").alt = caption;
-      viewer.querySelector("p").textContent = caption;
-      viewer.showModal();
+  function render(count) {
+    metar.textContent = "";
+    groups.slice(0, count).forEach(([code], i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "group";
+      b.textContent = code;
+      b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", () => light(i));
+      metar.append(b, " ");
     });
-    grid.append(el("figure", {}, btn, el("figcaption", { textContent: caption })));
+    if (count === groups.length) metar.append("=");
   }
-  main.append(el("section", { id: p.id },
-    el("h2", { textContent: p.title }),
-    el("p", { className: "meta", textContent: p.meta }),
-    el("p", { className: "summary", textContent: p.summary }),
-    el("ul", { className: "tools" }, ...p.tools.map(t => el("li", { textContent: t }))),
-    grid));
-}
+
+  // The one moment of motion on the page: the report "comes in" group by group.
+  if (reduce) {
+    render(groups.length);
+  } else {
+    let n = 0;
+    const caret = document.createElement("span");
+    caret.className = "caret";
+    caret.innerHTML = "&nbsp;";
+    const tick = () => {
+      render(++n);
+      if (n < groups.length) { metar.append(caret); setTimeout(tick, 240); }
+    };
+    metar.append(caret);
+    setTimeout(tick, 400);
+  }
+
+  /* ---- the stack, grouped by where it runs ---- */
+  const D = (n, v = "original") => `https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/${n}/${n}-${v}.svg`;
+  const stack = [
+    ["Web apps", "Front ends and APIs for offices that run all day.", [
+      ["TypeScript", D("typescript")], ["React", D("react")], ["Vite", D("vitejs")], ["Node.js", D("nodejs")],
+      ["Express", D("express"), true], ["Next.js", D("nextjs"), true], ["Laravel", D("laravel")], ["ASP.NET Core", D("dotnetcore")],
+    ]],
+    ["Mobile", "Android apps for the field and for residents.", [
+      ["React Native", D("react")], ["Expo", null, "EX"], ["Android", D("android")], [".NET MAUI", D("dot-net")],
+    ]],
+    ["Desktop", "Where my first billing systems came from.", [
+      ["VB.NET", D("visualbasic")], ["C#", D("csharp")], ["Tauri", D("tauri")], ["Crystal Reports", null, "CR"],
+    ]],
+    ["Data", "Ledgers that have to balance to the centavo.", [
+      ["PostgreSQL", D("postgresql")], ["MySQL", D("mysql")], ["SQL Server", D("microsoftsqlserver")], ["SQLite", D("sqlite")],
+      ["MongoDB", D("mongodb")], ["MapLibre GIS", null, "GL"],
+    ]],
+    ["Hosting and ops", "Small offices, real uptime.", [
+      ["Cloudflare", D("cloudflare")], ["GitHub", D("github"), true], ["Git", D("git")], ["Windows Server", D("windows11")],
+      ["Google Cloud", D("googlecloud")], ["Three.js", D("threejs"), true],
+    ]],
+    ["Languages", "Day to day.", [
+      ["TypeScript", D("typescript")], ["JavaScript", D("javascript")], ["C#", D("csharp")], ["VB.NET", D("visualbasic")],
+      ["PHP", D("php")], ["SQL", null, "SQL"],
+    ]],
+  ];
+  const grid = document.getElementById("stackGrid");
+  for (const [title, note, tools] of stack) {
+    const card = document.createElement("div");
+    card.className = "layer";
+    card.innerHTML = `<h3>${title}</h3><p>${note}</p>`;
+    const ul = document.createElement("ul");
+    ul.className = "tools";
+    for (const [name, src, flag] of tools) {
+      const li = document.createElement("li");
+      const glyph = () => {
+        const g = document.createElement("span");
+        g.className = "glyph";
+        g.textContent = typeof flag === "string" ? flag : name.slice(0, 2);
+        g.setAttribute("aria-hidden", "true");
+        return g;
+      };
+      if (src) {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "";
+        img.loading = "lazy";
+        if (flag === true) img.className = "mono";
+        img.onerror = () => img.replaceWith(glyph());
+        li.append(img);
+      } else {
+        li.append(glyph());
+      }
+      li.append(name);
+      ul.append(li);
+    }
+    card.append(ul);
+    grid.append(card);
+  }
+</script>
+
+<script>
+  /* ---- the sea behind the page ----
+     Still water over a sandy floor, with sunlight drawn as a soft net of light.
+     The pointer and taps make ripples (a small wave simulation) that bend the light
+     as they pass, then the water settles and nothing runs until it's touched again. */
+  (() => {
+    const cv = document.getElementById("sea");
+    const cx = cv.getContext("2d");
+    const still = matchMedia("(prefers-reduced-motion: reduce)");
+    const scheme = matchMedia("(prefers-color-scheme: dark)");
+    const CELL = 4;              // css px per water cell
+    const DAMP = 0.975;          // how quickly ripples die out
+    const STEP_MS = 1000 / 60;   // simulation runs at 60 steps a second on any screen
+    let W = 0, H = 0, w = 0, h = 0, cur, prev, light, img, col;
+    let raf = 0, last = 0, acc = 0, lastPt = null;
+
+    function colors() {
+      const cs = getComputedStyle(document.documentElement);
+      const rgb = (n) => cs.getPropertyValue(n).trim().split(/\s+/).map(Number);
+      col = {
+        glint: rgb("--glint"), glintA: parseFloat(cs.getPropertyValue("--glint-a")),
+        deep: rgb("--deep"), deepA: parseFloat(cs.getPropertyValue("--deep-a")),
+      };
+    }
+
+    // seeded random, so the light pattern is the same on every visit
+    function rand(seed) {
+      return () => {
+        seed |= 0; seed = (seed + 0x6d2b79f5) | 0;
+        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    // sunlight through shallow water: bright lines where Voronoi cells meet
+    function sunlight() {
+      light = new Float32Array(w * h);
+      const layer = (size, weight, seed) => {
+        const r = rand(seed);
+        const gw = Math.ceil(w / size) + 2, gh = Math.ceil(h / size) + 2;
+        const pts = new Float32Array(gw * gh * 2);
+        for (let j = 0; j < gh; j++) for (let i = 0; i < gw; i++) {
+          pts[(j * gw + i) * 2] = (i - 1 + r()) * size;
+          pts[(j * gw + i) * 2 + 1] = (j - 1 + r()) * size;
+        }
+        const width = size * 0.16;
+        for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+          const ci = Math.floor(x / size) + 1, cj = Math.floor(y / size) + 1;
+          let f1 = 1e9, f2 = 1e9;
+          for (let dj = -1; dj <= 1; dj++) for (let di = -1; di <= 1; di++) {
+            const k = ((cj + dj) * gw + (ci + di)) * 2;
+            const dx = pts[k] - x, dy = pts[k + 1] - y, d = dx * dx + dy * dy;
+            if (d < f1) { f2 = f1; f1 = d; } else if (d < f2) f2 = d;
+          }
+          const e = Math.sqrt(f2) - Math.sqrt(f1);
+          if (e < width) light[y * w + x] += weight * (1 - e / width) ** 2;
+        }
+      };
+      layer(26, 0.75, 7);
+      layer(12, 0.35, 21);
+    }
+
+    function size() {
+      W = innerWidth; H = innerHeight;
+      w = Math.ceil(W / CELL); h = Math.ceil(H / CELL);
+      cv.width = w; cv.height = h;          // css stretches it smoothly to full screen
+      cur = new Float32Array(w * h); prev = new Float32Array(w * h);
+      img = cx.createImageData(w, h);
+      sunlight();
+    }
+
+    function render(calm) {
+      const d = img.data;
+      const [gr, gg, gb] = col.glint, [dr, dg, db] = col.deep;
+      const ga = col.glintA * 255, da = col.deepA * 255;
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+        const i = y * w + x;
+        let L;
+        if (calm || x === 0 || y === 0 || x === w - 1 || y === h - 1) L = light[i];
+        else {
+          const gx = cur[i + 1] - cur[i - 1], gy = cur[i + w] - cur[i - w];
+          // the ripple's slope bends the light underneath and shades the water
+          const sx = Math.min(w - 1, Math.max(0, Math.round(x + gx * 8)));
+          const sy = Math.min(h - 1, Math.max(0, Math.round(y + gy * 8)));
+          L = light[sy * w + sx] - (gx + gy) * 0.9;
+        }
+        const o = i * 4;
+        if (L >= 0) { d[o] = gr; d[o + 1] = gg; d[o + 2] = gb; d[o + 3] = Math.min(255, L * ga); }
+        else { d[o] = dr; d[o + 1] = dg; d[o + 2] = db; d[o + 3] = Math.min(255, -L * da); }
+      }
+      cx.putImageData(img, 0, 0);
+    }
+
+    function step() {
+      let max = 0;
+      for (let y = 1; y < h - 1; y++) for (let x = 1; x < w - 1; x++) {
+        const i = y * w + x;
+        const v = ((cur[i - 1] + cur[i + 1] + cur[i - w] + cur[i + w]) * 0.5 - prev[i]) * DAMP;
+        prev[i] = v;
+        if (v > max) max = v; else if (-v > max) max = -v;
+      }
+      const t = prev; prev = cur; cur = t;
+      return max;
+    }
+
+    function tick(now) {
+      raf = 0;
+      acc += Math.min(100, now - (last || now)); last = now;
+      let steps = 0, max = 1;
+      while (acc >= STEP_MS && steps < 4) { max = step(); acc -= STEP_MS; steps++; }
+      if (steps && max < 0.04) {             // calm again: draw still water and stop
+        cur.fill(0); prev.fill(0); last = 0; acc = 0;
+        render(true);
+        return;
+      }
+      if (steps) render(false);
+      raf = requestAnimationFrame(tick);
+    }
+    const wake = () => { if (!raf) raf = requestAnimationFrame(tick); };
+
+    function drop(px, py, amp, rad) {
+      const x0 = px / CELL, y0 = py / CELL;
+      for (let y = Math.max(1, Math.floor(y0 - rad)); y <= Math.min(h - 2, Math.ceil(y0 + rad)); y++)
+        for (let x = Math.max(1, Math.floor(x0 - rad)); x <= Math.min(w - 2, Math.ceil(x0 + rad)); x++) {
+          const dd = Math.hypot(x - x0, y - y0);
+          if (dd <= rad) cur[y * w + x] += amp * (0.5 + 0.5 * Math.cos((Math.PI * dd) / rad));
+        }
+      wake();
+    }
+
+    // the mouse trails small ripples; faster movement, slightly bigger ones
+    addEventListener("pointermove", (e) => {
+      if (still.matches || e.pointerType !== "mouse") return;
+      const p = { x: e.clientX, y: e.clientY };
+      if (lastPt) {
+        const speed = Math.hypot(p.x - lastPt.x, p.y - lastPt.y);
+        if (speed > 2) drop(p.x, p.y, 0.8 + Math.min(speed, 40) / 25, 3);
+      }
+      lastPt = p;
+    }, { passive: true });
+    document.addEventListener("mouseleave", () => { lastPt = null; });
+
+    // a click or tap drops a stone in the water
+    addEventListener("pointerdown", (e) => {
+      if (!still.matches) drop(e.clientX, e.clientY, 7, 5);
+    }, { passive: true });
+
+    function start() {
+      cancelAnimationFrame(raf); raf = 0; last = 0; acc = 0;
+      size(); colors(); render(true);
+    }
+    let pending = 0;
+    addEventListener("resize", () => { cancelAnimationFrame(pending); pending = requestAnimationFrame(start); });
+    scheme.addEventListener("change", () => { colors(); render(true); });
+    still.addEventListener("change", start);
+    start();
+  })();
 </script>
 </body>
 </html>
