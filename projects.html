@@ -75,10 +75,11 @@ const projects = [
     ]
   },
   {
-    id: "merqo", title: "Merqo — Multi-tenant Cloud Point-of-Sale", meta: "VIVITO IT Solutions · in development · demo data",
-    summary: "One point-of-sale for restaurants, retail shops and supermarkets, with industry features switched on per tenant: cashier terminal, back office, customer display and themes.",
+    id: "suklii", title: "Suklii — Multi-tenant Cloud Point-of-Sale", meta: "VIVITO IT Solutions · in development · demo data",
+    summary: "One point-of-sale for cafés, retail shops and supermarkets, with industry features switched on per tenant: cashier terminal, back office, customer display and themes.",
+    link: ["https://vivito.tech/website-showcase/suklii/", "Try the register on the Suklii showcase"],
     tools: [".NET 10", "ASP.NET Core", "EF Core", "PostgreSQL 18 (Row-Level Security)", "React + TypeScript", "Tauri", "OpenTelemetry"],
-    dir: "merqo", shots: [
+    dir: "suklii", shots: [
       ["pos-sell-coffee", "Coffee shop terminal: menu and current sale"],
       ["retail-pos-size-colour", "Retail: picking size and colour"],
       ["grocery-pos-weight", "Grocery: items sold by weight"],
@@ -162,6 +163,7 @@ for (const p of projects.filter(p => p.shots.length)) {
     el("h2", { textContent: p.title }),
     el("p", { className: "meta", textContent: p.meta }),
     el("p", { className: "summary", textContent: p.summary }),
+    ...(p.link ? [el("p", { className: "summary" }, el("a", { href: p.link[0], textContent: p.link[1] }))] : []),
     el("ul", { className: "tools" }, ...p.tools.map(t => el("li", { textContent: t }))),
     grid));
 }
