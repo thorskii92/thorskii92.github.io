@@ -74,7 +74,8 @@
   .msg { background: var(--teal-2); border-radius: 14px; padding: 14px; white-space: pre-wrap; font-size: 15px; margin: 12px 0; }
   .visit { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; padding-bottom: 70px; }
   .visit .card p { margin: 6px 0; }
-  .map { border-radius: 22px; overflow: hidden; min-height: 260px; background: linear-gradient(135deg, #cfe8f2, #e9f3e3); display: grid; place-items: center; color: var(--muted); text-align: center; padding: 20px; border: 1px solid var(--line); }
+  .map iframe { border: 0; width: 100%; height: 100%; min-height: 320px; display: block; }
+  .map { border-radius: 22px; overflow: hidden; min-height: 260px; background: linear-gradient(135deg, #cfe8f2, #e9f3e3); display: grid; place-items: center; color: var(--muted); text-align: center; border: 1px solid var(--line); }
   footer { text-align: center; color: var(--muted); font-size: 13px; padding: 0 20px 40px; }
   @media (max-width: 900px) { .three, .fees, .book, .visit, .opts { grid-template-columns: 1fr; } .top nav a:not(.call) { display: none; } }
 </style>
@@ -145,8 +146,9 @@
         <p>Near Princesa Gardens, beside Cockatoo</p>
         <p>📞 <a href="tel:+639178495922">0917 849 5922</a></p>
         <p>Facebook: RayBons Beachfront and Cottages</p>
+        <p style="margin-top:16px"><a class="btn gold" href="https://www.google.com/maps/dir/?api=1&amp;destination=9.7341717,118.7723824" target="_blank" rel="noopener">Get directions</a></p>
       </div>
-      <div class="map">A map of the location goes here<br><small>(embed from Google Maps once the owners confirm the pin)</small></div>
+      <div class="map"><iframe title="Map to RayBons Beachfront and Cottages" src="https://maps.google.com/maps?q=Raybons+Beachfront+and+Cottages@9.7341717,118.7723824&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
     </div>
   </section>
 </div>
