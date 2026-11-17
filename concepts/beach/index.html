@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="photos/logo.jpg">
+<title>RayBons Beachfront and Cottages · Website concept</title>
+<meta name="description" content="A website concept for RayBons Beachfront and Cottages, Canigaran, Bancao-Bancao, Puerto Princesa City: day use or overnight, cottages, pool and the sandbar, with a booking request.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
+<style>
+  :root { --navy: #1d3a6e; --navy-2: #2b4f8f; --teal: #22b3a6; --teal-2: #c9efe9; --gold: #f6c544; --sand: #fbf6ec; --ink: #16284a; --muted: #5d6b80; --card: #fff; --line: #e4e9f1; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--sand); color: var(--ink); font: 16px/1.6 "Nunito Sans", system-ui, sans-serif; }
+  .concept { background: var(--navy); color: #dbe6f7; text-align: center; font-size: 13px; padding: 6px 12px; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+  /* hero */
+  .hero { position: relative; min-height: 82vh; display: grid; align-items: end; color: #fff; overflow: hidden; background: var(--navy); }
+  .hero .ph { position: absolute; inset: 0; }
+  .hero .ph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(16,32,64,.35) 0%, rgba(16,32,64,.15) 40%, rgba(16,32,64,.85) 100%); }
+  .top { position: absolute; top: 0; left: 0; right: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .badge { width: 74px; height: 74px; border-radius: 50%; background: #fff; overflow: hidden; flex: none; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+  .brand .badge img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; transform: scale(1.7); }
+  .logo { font: 44px/1 "Satisfy", cursive; } .logo small { display: block; font: 700 12px "Nunito Sans", sans-serif; letter-spacing: .18em; text-transform: uppercase; opacity: .9; margin-top: 2px; }
+  .top nav { display: flex; gap: 22px; font-weight: 700; } .top nav a { color: #fff; text-decoration: none; }
+  .top .call { background: var(--gold); color: var(--navy); padding: 9px 16px; border-radius: 99px; }
+  .hero .in { position: relative; z-index: 2; padding: 0 24px 70px; max-width: 1160px; margin: 0 auto; width: 100%; }
+  .hero .tag { display: inline-block; background: rgba(255,255,255,.16); backdrop-filter: blur(4px); padding: 6px 14px; border-radius: 99px; font-weight: 700; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+  .hero h1 { font: 800 clamp(46px, 7vw, 90px)/.95 "Nunito Sans", sans-serif; margin: 16px 0 12px; letter-spacing: -.02em; }
+  .hero h1 span { font-family: "Satisfy", cursive; font-weight: 400; color: var(--gold); }
+  .hero p { font-size: 20px; max-width: 48ch; margin: 0 0 24px; opacity: .95; }
+  .btn { display: inline-block; font: 800 17px "Nunito Sans", sans-serif; padding: 14px 24px; border-radius: 14px; border: 0; cursor: pointer; text-decoration: none; }
+  .btn.gold { background: var(--gold); color: var(--navy); } .btn.ghost { background: rgba(255,255,255,.14); color: #fff; margin-left: 8px; }
+  /* photo slots: the real photo if it is in photos/, a drawn placeholder if not */
+  .ph { background: linear-gradient(160deg, #7cc8e8, #2b78b0 55%, #e9d8b0 56%, #f3e6c8); }
+  .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ph img.missing { display: none; }
+  /* sections */
+  section { padding: 70px 0 0; }
+  h2 { font: 800 38px/1.1 "Nunito Sans", sans-serif; margin: 0 0 8px; letter-spacing: -.02em; }
+  h2 em { font: 400 46px "Satisfy", cursive; color: var(--teal); }
+  .lede { color: var(--muted); margin: 0 0 26px; max-width: 58ch; font-size: 18px; }
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .feat { background: var(--card); border-radius: 22px; overflow: hidden; border: 1px solid var(--line); }
+  .feat .ph { height: 220px; }
+  .feat .t { padding: 18px 20px 22px; } .feat b { font-size: 20px; display: block; } .feat span { color: var(--muted); }
+  .fees { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .fee { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px; text-align: center; }
+  .fee b { display: block; font-size: 40px; color: var(--navy); letter-spacing: -.02em; } .fee span { color: var(--muted); font-weight: 700; }
+  .both { text-align: center; font: 30px "Satisfy", cursive; color: var(--navy); margin: 18px 0 0; }
+  /* booking */
+  .book { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(320px, 1fr); gap: 22px; align-items: start; }
+  .card { background: var(--card); border-radius: 22px; padding: 22px; border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(22, 40, 74, .06); }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--teal-2); border-radius: 14px; padding: 5px; margin-bottom: 18px; }
+  .seg button { border: 0; background: none; padding: 12px; border-radius: 10px; font: 800 16px "Nunito Sans", sans-serif; color: var(--navy-2); cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: #fff; color: var(--navy); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+  label.f { font-size: 13px; font-weight: 800; color: var(--muted); display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .06em; }
+  input[type=date], input[type=text], input[type=tel] { width: 100%; font: inherit; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; color: var(--ink); background: #fff; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+  .count { display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--line); border-radius: 12px; padding: 6px 8px 6px 14px; }
+  .count button { width: 34px; height: 34px; border-radius: 50%; border: 0; background: var(--teal-2); color: var(--navy); font-size: 20px; font-weight: 800; cursor: pointer; }
+  .count small { color: var(--muted); }
+  .opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+  .opt { text-align: left; border: 2px solid var(--line); background: #fff; border-radius: 16px; padding: 14px; cursor: pointer; font: inherit; color: inherit; }
+  .opt[aria-pressed="true"] { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(34,179,166,.18); }
+  .opt b { display: block; } .opt span { font-size: 13px; color: var(--muted); } .opt .pr { display: block; margin-top: 6px; font-weight: 800; color: var(--navy); }
+  .sample { font-size: 12px; font-weight: 700; color: #a15c00; background: #fff3d6; padding: 2px 8px; border-radius: 99px; }
+  .line { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px dashed var(--line); }
+  .line.tot { border: 0; font-size: 22px; font-weight: 800; padding-top: 12px; } .line.tot span:last-child { color: var(--navy); }
+  .note { font-size: 13px; color: var(--muted); }
+  .cta { width: 100%; margin-top: 14px; border: 0; border-radius: 14px; padding: 15px; background: var(--teal); color: #fff; font: 800 18px "Nunito Sans", sans-serif; cursor: pointer; }
+  .msg { background: var(--teal-2); border-radius: 14px; padding: 14px; white-space: pre-wrap; font-size: 15px; margin: 12px 0; }
+  .visit { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; padding-bottom: 70px; }
+  .visit .card p { margin: 6px 0; }
+  .map { border-radius: 22px; overflow: hidden; min-height: 260px; background: linear-gradient(135deg, #cfe8f2, #e9f3e3); display: grid; place-items: center; color: var(--muted); text-align: center; padding: 20px; border: 1px solid var(--line); }
+  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 0 20px 40px; }
+  @media (max-width: 900px) { .three, .fees, .book, .visit, .opts { grid-template-columns: 1fr; } .top nav a:not(.call) { display: none; } }
+</style>
+</head>
+<body>
+<div class="concept">Website concept · not yet the official RayBons site · booking rates marked "sample" are placeholders</div>
+<header class="hero">
+  <div class="ph"><img src="photos/pool-night.jpg" alt="RayBons' pool under string lights at dusk" onerror="this.classList.add('missing')"></div>
+  <div class="top"><div class="brand"><span class="badge"><img src="photos/logo.jpg" alt="RayBons logo" onerror="this.parentNode.remove()"></span><div class="logo">RayBons<small>Beachfront and Cottages</small></div></div>
+    <nav><a href="#stay">Cottages</a><a href="#fees">Entrance</a><a href="#book">Book</a><a class="call" href="tel:+639178495922">0917 849 5922</a></nav></div>
+  <div class="in">
+    <span class="tag">Minimalist beach in the heart of the city</span>
+    <h1>Sun · Sea · Pool <span>Splash &amp; chill</span></h1>
+    <p>A quiet beachfront in Canigaran, Bancao-Bancao, Puerto Princesa City, a short ride from downtown. Perfect for family and barkada.</p>
+    <a class="btn gold" href="#book">Book your cottage</a><a class="btn ghost" href="#visit">How to get here</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <section id="stay">
+    <h2>Pick your <em>spot</em></h2>
+    <p class="lede">Bamboo nipa huts under the trees, painted cottages by the water, and a pool under the lights for the evening.</p>
+    <div class="three">
+      <div class="feat"><div class="ph"><img src="photos/nipa-huts.jpg" alt="Bamboo nipa hut cottages under a tree" onerror="this.classList.add('missing')"></div><div class="t"><b>Nipa hut cottages</b><span>Shade, sea breeze, and the sign to the sandbar.</span></div></div>
+      <div class="feat"><div class="ph"><img src="photos/cottages.jpg" alt="Blue and teal painted cottages with long tables" onerror="this.classList.add('missing')"></div><div class="t"><b>Beachfront cottages</b><span>Long tables for the whole family, steps from the sand.</span></div></div>
+      <div class="feat"><div class="ph"><img src="photos/pool-night.jpg" alt="The pool at night" onerror="this.classList.add('missing')"></div><div class="t"><b>Pool under the lights</b><span>For the kids by day and a cool dip at night.</span></div></div>
+    </div>
+  </section>
+
+  <section id="fees">
+    <h2>Entrance <em>fee</em></h2>
+    <div class="fees">
+      <div class="fee"><span>Kids 4–11</span><b>₱40</b></div>
+      <div class="fee"><span>Adults 12 and up</span><b>₱50</b></div>
+      <div class="fee"><span>Senior citizen / PWD</span><b>₱40</b></div>
+    </div>
+    <p class="both">Day use or overnight</p>
+  </section>
+
+  <section id="book">
+    <h2>Book your <em>visit</em></h2>
+    <p class="lede">Choose your day and cottage, and we'll prepare a booking message to send RayBons by text or Messenger.</p>
+    <div class="book">
+      <div class="card">
+        <div class="seg" role="group" aria-label="Day use or overnight"><button data-mode="day" aria-pressed="true">Day use</button><button data-mode="night" aria-pressed="false">Overnight</button></div>
+        <div class="grid2"><div><label class="f" for="date">Date</label><input type="date" id="date"></div><div><label class="f" for="name">Your name</label><input type="text" id="name" placeholder="Juan Dela Cruz"></div></div>
+        <div class="grid2">
+          <div><label class="f">Adults 12+</label><div class="count"><small>₱50</small><span><button data-c="adults" data-d="-1" aria-label="Fewer adults">−</button> <b id="adults">4</b> <button data-c="adults" data-d="1" aria-label="More adults">+</button></span></div></div>
+          <div><label class="f">Kids 4–11</label><div class="count"><small>₱40</small><span><button data-c="kids" data-d="-1" aria-label="Fewer kids">−</button> <b id="kids">2</b> <button data-c="kids" data-d="1" aria-label="More kids">+</button></span></div></div>
+        </div>
+        <div class="grid2">
+          <div><label class="f">Senior / PWD</label><div class="count"><small>₱40</small><span><button data-c="sc" data-d="-1" aria-label="Fewer seniors">−</button> <b id="sc">0</b> <button data-c="sc" data-d="1" aria-label="More seniors">+</button></span></div></div>
+          <div></div>
+        </div>
+        <label class="f">Cottage <span class="sample">sample rates</span></label>
+        <div class="opts" id="opts"></div>
+      </div>
+      <div class="card" id="sum"></div>
+    </div>
+  </section>
+
+  <section id="visit">
+    <h2>Find <em>us</em></h2>
+    <div class="visit">
+      <div class="card">
+        <p><b>RayBons Beachfront and Cottages</b></p>
+        <p>Canigaran, Bancao-Bancao, Puerto Princesa City, Palawan</p>
+        <p>Near Princesa Gardens, beside Cockatoo</p>
+        <p>📞 <a href="tel:+639178495922">0917 849 5922</a></p>
+        <p>Facebook: RayBons Beachfront and Cottages</p>
+      </div>
+      <div class="map">A map of the location goes here<br><small>(embed from Google Maps once the owners confirm the pin)</small></div>
+    </div>
+  </section>
+</div>
+<footer>Website concept for RayBons Beachfront and Cottages by Nestor Igna Jr. Cottage rates shown are samples until the owners confirm them.</footer>
+
+<script>
+const peso = (n) => "₱" + n.toLocaleString("en-PH");
+// SAMPLE rates: replace with the owners' real cottage prices
+const COTS = [
+  { id: "nipa", name: "Nipa hut", text: "Up to 10", day: 500, night: 800 },
+  { id: "beachfront", name: "Beachfront cottage", text: "Up to 15", day: 700, night: 1000 },
+  { id: "gazebo", name: "Pool gazebo", text: "Up to 20", day: 1000, night: 1500 },
+];
+const st = { mode: "day", adults: 4, kids: 2, sc: 0, pick: COTS[0], sent: false };
+const d0 = new Date(); d0.setDate(d0.getDate() + 7); document.getElementById("date").value = d0.toISOString().slice(0, 10);
+document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => { st.mode = b.dataset.mode; st.sent = false; document.querySelectorAll(".seg button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); render(); }));
+document.querySelectorAll("[data-c]").forEach((b) => b.addEventListener("click", () => { const k = b.dataset.c; st[k] = Math.max(k === "adults" ? 1 : 0, Math.min(60, st[k] + +b.dataset.d)); st.sent = false; render(); }));
+["date", "name"].forEach((id) => document.getElementById(id).addEventListener("input", () => { st.sent = false; summary(); }));
+function render() {
+  ["adults", "kids", "sc"].forEach((k) => (document.getElementById(k).textContent = st[k]));
+  const opts = document.getElementById("opts"); opts.replaceChildren();
+  COTS.forEach((c) => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "opt"; b.setAttribute("aria-pressed", String(c === st.pick));
+    b.innerHTML = `<b>${c.name}</b><span>${c.text}</span><span class="pr">${peso(st.mode === "day" ? c.day : c.night)}</span>`;
+    b.addEventListener("click", () => { st.pick = c; st.sent = false; render(); }); opts.append(b);
+  });
+  summary();
+}
+function summary() {
+  const ent = st.adults * 50 + st.kids * 40 + st.sc * 40, cot = st.mode === "day" ? st.pick.day : st.pick.night, total = ent + cot;
+  const date = new Date(document.getElementById("date").value).toDateString(), name = document.getElementById("name").value.trim() || "(your name)";
+  const people = `${st.adults} adult${st.adults === 1 ? "" : "s"}${st.kids ? `, ${st.kids} kid${st.kids === 1 ? "" : "s"}` : ""}${st.sc ? `, ${st.sc} senior/PWD` : ""}`;
+  const msg = `Hi RayBons! I'd like to book:\n• ${st.mode === "day" ? "Day use" : "Overnight"} on ${date}\n• ${st.pick.name}\n• ${people}\nName: ${name}\nIs it available? Thank you!`;
+  const el = document.getElementById("sum");
+  el.innerHTML = `<h2 style="font-size:28px">Your visit</h2>
+    <div class="line"><span>Entrance · ${people}</span><span>${peso(ent)}</span></div>
+    <div class="line"><span>${st.pick.name} · ${st.mode === "day" ? "day use" : "overnight"} <span class="sample">sample</span></span><span>${peso(cot)}</span></div>
+    <div class="line tot"><span>Estimated total</span><span>${peso(total)}</span></div>
+    ${st.sent ? `<p class="note">Your booking message, ready to send:</p><div class="msg"></div>
+      <a class="cta" style="display:block;text-align:center;text-decoration:none" href="sms:+639178495922?body=${encodeURIComponent(msg)}">Send by text to 0917 849 5922</a>
+      <p class="note">Or copy it to RayBons' Facebook page. They confirm availability and how to pay.</p>`
+      : `<button class="cta" id="go">Prepare booking message</button><p class="note">Pay the entrance and cottage on arrival unless RayBons asks for a reservation fee.</p>`}`;
+  if (st.sent) el.querySelector(".msg").textContent = msg;
+  else document.getElementById("go").addEventListener("click", () => { st.sent = true; summary(); });
+}
+render();
+</script>
+</body>
+</html>
