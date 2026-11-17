@@ -26,12 +26,10 @@
     /* the sea: lagoon water, sunlight on the sand, and the shade of a ripple */
     --water-top: #f1f4f5;
     --water-bottom: #e6ecee;
-    /* the aerodrome chart: faint ink on gridded chart paper, an orange windsock */
+    /* the chart: faint ink on gridded chart paper */
     --chart-ink: rgba(19, 48, 74, .17);
     --chart-grid: rgba(19, 48, 74, .045);
     --chart-text: rgba(19, 48, 74, .55);
-    --sock: #e8772e;
-    --sock-band: #fbf7f0;
     /* the cyclone chart: land, the track, and PAGASA's categories TD, TS, STS, TY, STY */
     --tc-land: rgba(19, 48, 74, .045);
     --tc-track: rgba(19, 48, 74, .35);
@@ -57,8 +55,6 @@
       --chart-ink: rgba(228, 237, 243, .16);
       --chart-grid: rgba(228, 237, 243, .04);
       --chart-text: rgba(228, 237, 243, .6);
-      --sock: #f08a3e;
-      --sock-band: #dfe6ea;
       --tc-land: rgba(228, 237, 243, .05);
       --tc-track: rgba(228, 237, 243, .35);
       --tc-cats: #7fb3cc, #4fc3b4, #f0c35a, #f59b5c, #ff6f5e;
@@ -171,7 +167,7 @@
   .trace .axis { stroke: var(--muted); stroke-width: 1; opacity: .5; }
   .trace text { fill: var(--muted); font: 12px "Archivo", sans-serif; }
 
-  /* the aerodrome chart behind the whole page; cards and the METAR sit on top of it */
+  /* the cyclone chart behind the whole page; cards and the METAR sit on top of it */
   .sea {
     position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
     background: linear-gradient(180deg, var(--water-top), var(--water-bottom));
@@ -721,213 +717,15 @@
   }
 </script>
 
-<script>
-  /* ---- the aerodrome behind the page ----
-     An aerodrome chart in faint ink: runway 09/27 with its markings, a parallel taxiway, an apron
-     and a compass rose, on gridded chart paper. The pointer is the wind: a windsock in the margin
-     swings downwind and fills as the wind picks up, the rose's needle shows where it blows from,
-     and a METAR wind group reports it. When the air goes calm, the sock droops and nothing runs. */
-  (() => {
-    if (new URLSearchParams(location.search).get("bg") !== "aerodrome") return;
-    const hint = document.querySelector(".sea-hint");
-    if (hint) hint.textContent = "The background is an aerodrome chart. Your mouse is the wind: watch the windsock and its wind group.";
-    const cv = document.getElementById("sea");
-    const cx = cv.getContext("2d");
-    const still = matchMedia("(prefers-reduced-motion: reduce)");
-    const scheme = matchMedia("(prefers-color-scheme: dark)");
-    let W = 0, H = 0, dpr = 1, chart = null, col;
-    let raf = 0, last = 0, lastPt = null;
-    // wind in px/s along the screen (it blows the way the pointer moves); the sock's own state
-    const wind = { x: 0, y: 0, peak: 0 };
-    const sock = { a: Math.PI / 2, va: 0, fill: 0 };
-
-    function colors() {
-      const cs = getComputedStyle(document.documentElement);
-      const v = (n) => cs.getPropertyValue(n).trim();
-      col = { ink: v("--chart-ink"), grid: v("--chart-grid"), sock: v("--sock"), sockB: v("--sock-band"), text: v("--chart-text") };
-    }
-
-    // ---------- the static chart, drawn once per size ----------
-    function drawChart() {
-      chart = document.createElement("canvas");
-      chart.width = cv.width; chart.height = cv.height;
-      const c = chart.getContext("2d");
-      c.scale(dpr, dpr);
-      c.strokeStyle = col.grid; c.lineWidth = 1;
-      for (let x = 0.5; x < W; x += 40) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, H); c.stroke(); }
-      for (let y = 0.5; y < H; y += 40) { c.beginPath(); c.moveTo(0, y); c.lineTo(W, y); c.stroke(); }
-
-      const narrow = W < 700;
-      const L = Math.min(W * (narrow ? 1.25 : 0.86), 1400), Wd = narrow ? 26 : 34;
-      const rx = W * 0.5, ry = H * (narrow ? 0.7 : 0.66);
-      c.save();
-      c.translate(rx, ry); c.rotate(-3 * Math.PI / 180);         // runway 09/27 lies on 087°/267°
-      c.strokeStyle = col.ink; c.fillStyle = col.ink; c.lineWidth = 1.4;
-      c.strokeRect(-L / 2, -Wd / 2, L, Wd);                       // runway edges
-      c.setLineDash([16, 12]); c.beginPath(); c.moveTo(-L / 2 + 120, 0); c.lineTo(L / 2 - 120, 0); c.stroke(); c.setLineDash([]);
-      for (const end of [-1, 1]) {                                // threshold piano keys
-        const x0 = end < 0 ? -L / 2 + 8 : L / 2 - 8 - 34;
-        for (let k = 0; k < 8; k++) { const y = -Wd / 2 + 3 + k * ((Wd - 6) / 8); c.fillRect(x0, y, 34, (Wd - 6) / 8 - 2); }
-        const ax = end < 0 ? -L / 2 + 150 : L / 2 - 150 - 40;   // aiming point blocks
-        c.fillRect(ax, -Wd / 2 + 4, 40, 5); c.fillRect(ax, Wd / 2 - 9, 40, 5);
-      }
-      c.font = `700 ${narrow ? 18 : 22}px "JetBrains Mono", monospace`; c.textAlign = "center"; c.textBaseline = "middle";
-      c.save(); c.translate(-L / 2 + 80, 0); c.rotate(Math.PI / 2); c.fillText("09", 0, 0); c.restore();
-      c.save(); c.translate(L / 2 - 80, 0); c.rotate(-Math.PI / 2); c.fillText("27", 0, 0); c.restore();
-      // parallel taxiway, its links, and the apron
-      const ty = -Wd / 2 - (narrow ? 60 : 90);
-      c.lineWidth = 1.2; c.setLineDash([2, 6]);
-      c.beginPath(); c.moveTo(-L / 2 + 40, ty); c.lineTo(L / 2 - 40, ty); c.stroke();
-      for (const f of [-0.42, 0, 0.42]) { c.beginPath(); c.moveTo(L * f, ty); c.quadraticCurveTo(L * f, -Wd / 2 - 8, L * f + 30, -Wd / 2 - 2); c.stroke(); }
-      c.setLineDash([]);
-      const aw = Math.min(260, L * 0.22), ah = narrow ? 50 : 70;
-      c.strokeRect(-aw / 2, ty - ah - 14, aw, ah);
-      c.beginPath(); c.moveTo(0, ty - 14); c.lineTo(0, ty); c.stroke();
-      c.font = `500 ${narrow ? 11 : 13}px "Archivo", sans-serif`; c.fillText("APRON", 0, ty - ah / 2 - 14);
-      c.textAlign = "left"; c.fillText("TWY A", -L / 2 + 50, ty - 12);
-      c.restore();
-
-      // compass rose: degree ticks every 10°, N marked
-      const R = rose();
-      c.strokeStyle = col.ink; c.fillStyle = col.ink; c.lineWidth = 1.2;
-      c.beginPath(); c.arc(R.x, R.y, R.r, 0, Math.PI * 2); c.stroke();
-      for (let d = 0; d < 360; d += 10) {
-        const a = (d - 90) * Math.PI / 180, len = d % 90 === 0 ? 10 : d % 30 === 0 ? 6 : 3;
-        c.beginPath(); c.moveTo(R.x + Math.cos(a) * R.r, R.y + Math.sin(a) * R.r);
-        c.lineTo(R.x + Math.cos(a) * (R.r - len), R.y + Math.sin(a) * (R.r - len)); c.stroke();
-      }
-      c.font = `700 13px "JetBrains Mono", monospace`; c.textAlign = "center"; c.textBaseline = "middle";
-      c.fillText("N", R.x, R.y - R.r - 12);
-    }
-    const rose = () => ({ x: W < 700 ? 54 : 84, y: H - (W < 700 ? 70 : 100), r: W < 700 ? 30 : 46 });
-    const pole = () => ({ x: W - (W < 700 ? 90 : 150), y: W < 700 ? 110 : 150, h: W < 700 ? 96 : 140 });
-
-    // ---------- the parts that move ----------
-    function drawSock(c) {
-      const P = pole(), len = W < 700 ? 74 : 110, r0 = W < 700 ? 9 : 13;
-      c.strokeStyle = col.ink; c.lineWidth = 2.2; c.lineCap = "round";
-      c.beginPath(); c.moveTo(P.x, P.y); c.lineTo(P.x, P.y + P.h); c.stroke();          // the mast
-      // five bands; with little wind the sock bends down toward the mast
-      const down = Math.PI / 2, n = 5;
-      let x = P.x, y = P.y, a = sock.a;
-      for (let i = 0; i < n; i++) {
-        const droop = (1 - sock.fill) * (0.28 + i * 0.12);
-        const ai = a + Math.atan2(Math.sin(down - a), Math.cos(down - a)) * Math.min(1, droop);
-        const segL = len / n, ra = r0 * (1 - i * 0.11) * (0.55 + 0.45 * sock.fill), rb = r0 * (1 - (i + 1) * 0.11) * (0.55 + 0.45 * sock.fill);
-        const nx = x + Math.cos(ai) * segL, ny = y + Math.sin(ai) * segL, px = -Math.sin(ai), py = Math.cos(ai);
-        c.beginPath();
-        c.moveTo(x + px * ra, y + py * ra); c.lineTo(nx + px * rb, ny + py * rb);
-        c.lineTo(nx - px * rb, ny - py * rb); c.lineTo(x - px * ra, y - py * ra); c.closePath();
-        c.fillStyle = i % 2 ? col.sockB : col.sock; c.fill();
-        x = nx; y = ny; a = ai;
-      }
-      // the METAR wind group for the pointer's wind
-      c.font = `700 ${W < 700 ? 12 : 14}px "JetBrains Mono", monospace`; c.fillStyle = col.text;
-      c.textAlign = "left"; c.textBaseline = "top";
-      c.fillText(windGroup(), P.x - 14, P.y + P.h + 10);
-    }
-
-    function windGroup() {
-      const sp = Math.hypot(wind.x, wind.y), kt = Math.min(60, Math.round(sp / 40));
-      if (kt < 1) return "00000KT";
-      const to = (Math.atan2(wind.x, -wind.y) * 180 / Math.PI + 360) % 360;   // screen up is north
-      const from = Math.round(((to + 180) % 360) / 10) * 10 || 360;
-      const gust = Math.min(80, Math.round(wind.peak / 40));
-      const g = gust >= kt + 10 ? `G${String(gust).padStart(2, "0")}` : "";
-      return `${String(from).padStart(3, "0")}${String(kt).padStart(2, "0")}${g}KT`;
-    }
-
-    function drawNeedle(c) {
-      const R = rose(), sp = Math.hypot(wind.x, wind.y);
-      if (sp < 40) return;
-      // the needle points to where the wind comes from
-      const a = Math.atan2(-wind.y, -wind.x);
-      c.strokeStyle = col.sock; c.lineWidth = 3; c.lineCap = "round";
-      c.beginPath(); c.moveTo(R.x, R.y); c.lineTo(R.x + Math.cos(a) * (R.r - 6), R.y + Math.sin(a) * (R.r - 6)); c.stroke();
-      c.fillStyle = col.sock; c.beginPath(); c.arc(R.x, R.y, 3.5, 0, Math.PI * 2); c.fill();
-    }
-
-    function render() {
-      cx.setTransform(1, 0, 0, 1, 0, 0);
-      cx.clearRect(0, 0, cv.width, cv.height);
-      if (chart) cx.drawImage(chart, 0, 0);
-      cx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      drawNeedle(cx);
-      drawSock(cx);
-    }
-
-    // ---------- motion ----------
-    function step(dt) {
-      // the wind dies away in about two seconds; the gust memory a little faster
-      const k = Math.exp(-dt * 1.4);
-      wind.x *= k; wind.y *= k; wind.peak *= Math.exp(-dt * 2);
-      const sp = Math.hypot(wind.x, wind.y);
-      const target = sp > 30 ? Math.atan2(wind.y, wind.x) : Math.PI / 2;     // downwind, or hanging down
-      const diff = Math.atan2(Math.sin(target - sock.a), Math.cos(target - sock.a));
-      sock.va += (diff * 26 - sock.va * 5.5) * dt;                               // a damped spring
-      sock.a += sock.va * dt;
-      sock.fill += (Math.min(1, sp / 700) - sock.fill) * Math.min(1, dt * 3);
-      return sp > 6 || Math.abs(sock.va) > 0.02 || Math.abs(diff) > 0.01 || sock.fill > 0.01;
-    }
-    function tick(now) {
-      raf = 0;
-      const dt = Math.min(0.05, (now - (last || now)) / 1000); last = now;
-      const moving = step(dt);
-      render();
-      if (moving) raf = requestAnimationFrame(tick); else last = 0;
-    }
-    const wake = () => { if (!raf && !still.matches) raf = requestAnimationFrame(tick); };
-
-    // the pointer is the wind
-    addEventListener("pointermove", (e) => {
-      if (still.matches || e.pointerType !== "mouse") return;
-      const p = { x: e.clientX, y: e.clientY, t: performance.now() };
-      if (lastPt) {
-        const dt = Math.max(8, p.t - lastPt.t) / 1000;
-        const vx = (p.x - lastPt.x) / dt, vy = (p.y - lastPt.y) / dt, s = Math.hypot(vx, vy);
-        if (s > 60) {
-          const cap = Math.min(1, 1800 / s);
-          wind.x += (vx * cap - wind.x) * 0.12; wind.y += (vy * cap - wind.y) * 0.12;
-          wind.peak = Math.max(wind.peak, Math.hypot(wind.x, wind.y));
-          wake();
-        }
-      }
-      lastPt = p;
-    }, { passive: true });
-    document.addEventListener("mouseleave", () => { lastPt = null; });
-    // a tap is a gust from a random-looking but repeatable direction
-    let taps = 0;
-    addEventListener("pointerdown", (e) => {
-      if (still.matches || e.pointerType === "mouse") return;
-      const a = (taps++ * 137.5) * Math.PI / 180;
-      wind.x = Math.cos(a) * 600; wind.y = Math.sin(a) * 600; wind.peak = 900;
-      wake();
-    }, { passive: true });
-
-    function start() {
-      cancelAnimationFrame(raf); raf = 0; last = 0;
-      W = innerWidth; H = innerHeight; dpr = Math.min(2, devicePixelRatio || 1);
-      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
-      colors(); drawChart(); render();
-    }
-    let pending = 0;
-    addEventListener("resize", () => { cancelAnimationFrame(pending); pending = requestAnimationFrame(start); });
-    scheme.addEventListener("change", start);
-    still.addEventListener("change", start);
-    document.fonts.ready.then(start);
-    start();
-  })();
-</script>
 
 <script>
-  /* ---- a tropical cyclone chart behind the page (the aerodrome chart is at ?bg=aerodrome) ----
+  /* ---- a tropical cyclone chart behind the page ----
      A warning chart in faint ink: a 5° graticule, the coasts of the Philippines and its
      neighbours (Natural Earth), and the Philippine Area of Responsibility. The pointer is the
      storm: a cyclone symbol spins where it is, and its best track is plotted behind it, one point
      every short distance, classified the way PAGASA does from the speed you move it.
      When the pointer stops, the symbol slows and the drawing stops. */
   (() => {
-    if (new URLSearchParams(location.search).get("bg") === "aerodrome") return;
     const cv = document.getElementById("sea");
     const cx = cv.getContext("2d");
     const still = matchMedia("(prefers-reduced-motion: reduce)");
