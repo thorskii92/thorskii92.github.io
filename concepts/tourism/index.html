@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bughaw Islands · Tourism guide concept by Nestor Igna Jr.</title>
+<meta name="description" content="A concept: a tourism guide for a fictional island group, with an illustrated map of places to visit, filters, and a trip planner. Fictional places and data.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+  :root { --sea: #0e5e6f; --sea-2: #8fd3d6; --deep: #0a3640; --sand: #f6efe2; --land: #d9e6c3; --land-2: #a9c98f; --coral: #f06a4d; --ink: #17302f; --muted: #5d7270; --card: #fffdf8; --line: #e6dccb; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--sand); color: var(--ink); font: 16px/1.55 "DM Sans", system-ui, sans-serif; }
+  .concept { background: var(--deep); color: #cfe9ea; text-align: center; font-size: 13px; padding: 6px 12px; } .concept a { color: inherit; }
+  header { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; }
+  header b { font: 26px "DM Serif Display", serif; } header nav { display: flex; gap: 18px; font-weight: 500; } header nav a { color: var(--ink); text-decoration: none; }
+  .hero { padding: 30px 28px 10px; max-width: 1200px; margin: 0 auto; }
+  .hero h1 { font: clamp(46px, 7vw, 92px)/.95 "DM Serif Display", serif; margin: 0; letter-spacing: -.01em; }
+  .hero h1 em { color: var(--coral); font-style: italic; }
+  .hero p { max-width: 54ch; font-size: 19px; color: var(--muted); }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 14px; }
+  .filters button { font: 500 14px "DM Sans", sans-serif; padding: 8px 16px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
+  .filters button i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .filters button[aria-pressed="true"] { background: var(--ink); color: var(--sand); border-color: var(--ink); }
+  .explore { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr); gap: 20px; align-items: start; }
+  .map { position: relative; background: radial-gradient(120% 90% at 30% 20%, #bfe7e6, var(--sea-2) 45%, #63b3b9); border-radius: 26px; overflow: hidden; aspect-ratio: 4 / 3; box-shadow: inset 0 0 0 1px rgba(10,54,64,.15); }
+  .map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .pin { cursor: pointer; transition: transform .25s cubic-bezier(.2, 1.4, .4, 1); transform-box: fill-box; transform-origin: 50% 100%; }
+  .pin:hover, .pin.on { transform: scale(1.35); }
+  .pin.dim { opacity: .18; pointer-events: none; }
+  .wave { animation: drift 9s ease-in-out infinite alternate; } @keyframes drift { to { transform: translateX(-24px); } }
+  .side { display: grid; gap: 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 20px; }
+  .spot .tag { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .spot h2 { font: 32px/1.05 "DM Serif Display", serif; margin: 6px 0 8px; }
+  .spot p { margin: 0 0 12px; color: var(--muted); }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 14px; }
+  .facts div { background: var(--sand); border-radius: 12px; padding: 8px 10px; font-size: 13px; } .facts b { display: block; font-size: 15px; }
+  .btn { font: 700 15px "DM Sans", sans-serif; border: 0; border-radius: 12px; padding: 12px 18px; background: var(--coral); color: #fff; cursor: pointer; }
+  .btn.ghost { background: var(--sand); color: var(--ink); }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .trip h3 { font: 26px "DM Serif Display", serif; margin: 0 0 4px; } .trip .sub { color: var(--muted); font-size: 14px; margin: 0 0 12px; }
+  .day { border-top: 1px dashed var(--line); padding: 10px 0; }
+  .day b { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--sea); }
+  .stop { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 6px 0; }
+  .stop button { border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 18px; }
+  .leg { font-size: 12px; color: var(--muted); padding-left: 14px; }
+  .empty { color: var(--muted); font-size: 14px; }
+  section.more { padding: 60px 0; }
+  section.more h2 { font: 40px "DM Serif Display", serif; margin: 0 0 18px; }
+  .months { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; }
+  .months div { text-align: center; font-size: 13px; }
+  .months i { display: block; height: 70px; border-radius: 10px; margin-bottom: 6px; }
+  .legend { display: flex; gap: 16px; font-size: 13px; color: var(--muted); margin-top: 10px; } .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  .fests { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 30px; }
+  .fest b { font: 24px "DM Serif Display", serif; display: block; } .fest span { color: var(--coral); font-weight: 700; font-size: 14px; }
+  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 10px 20px 40px; }
+  @media (max-width: 900px) { .explore, .fests { grid-template-columns: 1fr; } .months { grid-template-columns: repeat(6, 1fr); } header nav { display: none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="concept">Concept · a fictional island group, places and figures · not a client project · <a href="../../projects.html#tourism">by Nestor Igna Jr.</a></div>
+<header><b>Bughaw Islands</b><nav><a href="#explore">Explore</a><a href="#seasons">When to go</a><a href="#fests">Festivals</a></nav></header>
+<div class="hero">
+  <h1>Seven islands, <em>one slow week</em></h1>
+  <p>Limestone coves, a reef you can snorkel from the beach, and a town that still closes for siesta. Tap the map to plan your days.</p>
+</div>
+<div class="wrap" id="explore">
+  <div class="filters" id="filters"></div>
+  <div class="explore">
+    <div class="map"><svg id="map" viewBox="0 0 800 600" role="img" aria-label="Illustrated map of the Bughaw Islands with places to visit"></svg></div>
+    <div class="side">
+      <div class="card spot" id="spot"></div>
+      <div class="card trip"><h3>My trip</h3><p class="sub" id="trip-sub"></p><div id="trip"></div></div>
+    </div>
+  </div>
+  <section class="more" id="seasons">
+    <h2>When to go</h2>
+    <div class="months" id="months"></div>
+    <div class="legend"><span><i style="background:#2aa198"></i>Calm seas, best for island hopping</span><span><i style="background:#e9c46a"></i>Hot and dry</span><span><i style="background:#9fb7c4"></i>Rainy, boats may be cancelled</span></div>
+  </section>
+  <section class="more" id="fests" style="padding-top:0">
+    <h2>Festivals</h2>
+    <div class="fests">
+      <div class="card fest"><span>March</span><b>Pista sa Dagat</b>Boat parade and a seafood market on the pier.</div>
+      <div class="card fest"><span>May</span><b>Kawayan Festival</b>Bamboo crafts, street dancing and a raft race.</div>
+      <div class="card fest"><span>December</span><b>Parol sa Isla</b>Lantern-lit boats around the bay on Christmas week.</div>
+    </div>
+  </section>
+</div>
+<footer>A concept for a provincial tourism site. The islands, places, travel times and festivals are invented.</footer>
+
+<script>
+const CATS = { beach: ["Beaches", "#f06a4d"], dive: ["Snorkel & dive", "#2a9d8f"], nature: ["Falls & caves", "#6a994e"], town: ["Town & food", "#e09f3e"] };
+// islands as soft blobs: [cx, cy, rx, ry, seed]
+const ISLES = [[230, 210, 150, 95, 1], [470, 160, 80, 55, 2], [600, 270, 120, 80, 3], [380, 380, 95, 60, 4], [560, 470, 70, 45, 5], [170, 450, 60, 40, 6], [690, 130, 40, 28, 7]];
+const SPOTS = [
+  ["Puting Buhangin Beach", "beach", 175, 250, "A kilometre of white sand with shallow water until noon.", "Easy", "All day", "Free"],
+  ["Lagoon of Nine Rocks", "dive", 300, 180, "Kayak through limestone into a calm green lagoon.", "Easy", "2–3 h", "₱200"],
+  ["Bughaw Town Plaza", "town", 250, 225, "The 1890s church, the market and the best kakanin at dawn.", "Easy", "2 h", "Free"],
+  ["Tagpi Falls", "nature", 205, 165, "A 40-minute forest walk to a three-tier waterfall.", "Moderate", "Half day", "₱50"],
+  ["Pawikan Reef", "dive", 470, 160, "Sea turtles graze the seagrass a short swim from shore.", "Easy", "Half day", "₱300"],
+  ["Sunset Sandbar", "beach", 540, 205, "A sandbar that appears at low tide, best after 4 PM.", "Easy", "2 h", "Boat"],
+  ["Kuweba Cave", "nature", 620, 250, "A short cave with a skylight and swiftlet nests.", "Moderate", "1–2 h", "₱100"],
+  ["Daungan Seafood Row", "town", 640, 310, "Choose the catch, have it grilled next door.", "Easy", "1–2 h", "₱₱"],
+  ["Coral Garden", "dive", 380, 380, "The clearest snorkelling in the group, best on calm mornings.", "Easy", "Half day", "₱400"],
+  ["Hidden Cove", "beach", 560, 470, "Reachable only by boat, with no stalls and no signal.", "Easy", "Day trip", "Boat"],
+  ["Bantay Lighthouse", "nature", 690, 130, "A Spanish-era lighthouse with a view of all seven islands.", "Hard", "Half day", "₱50"],
+  ["Weaving Village", "town", 170, 450, "Pandan mats woven by hand; you can try a row.", "Easy", "2 h", "Free"],
+];
+// travel between spots: rough minutes by boat or road, from map distance
+const mins = (a, b) => Math.round(Math.hypot(a[2] - b[2], a[3] - b[3]) * .18 / 5) * 5 + 10;
+
+let seed = 7; const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+const svg = document.getElementById("map"), NS = "http://www.w3.org/2000/svg";
+const S = (tag, a, p = svg) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); p.append(e); return e; };
+const waves = S("g", { class: "wave" });
+for (let i = 0; i < 26; i++) S("path", { d: `M${rnd() * 800} ${rnd() * 600} q12 -6 24 0 t24 0`, fill: "none", stroke: "#fff", "stroke-opacity": .35, "stroke-width": 2, "stroke-linecap": "round" }, waves);
+function blob(cx, cy, rx, ry, s, k) { seed = s * 97 + 3; let d = ""; const n = 14;
+  for (let i = 0; i <= n; i++) { const a = (i / n) * Math.PI * 2, r = (1 + (rnd() - .5) * .28) * k; const x = cx + Math.cos(a) * rx * r, y = cy + Math.sin(a) * ry * r; d += (i ? "L" : "M") + x.toFixed(1) + " " + y.toFixed(1); }
+  return d + "Z"; }
+ISLES.forEach(([cx, cy, rx, ry, s]) => {
+  S("path", { d: blob(cx, cy, rx, ry, s, 1.18), fill: "#cdeee9", opacity: .7 });              // shallows
+  S("path", { d: blob(cx, cy, rx, ry, s, 1.04), fill: "#f6e7c5" });                         // beach
+  S("path", { d: blob(cx, cy, rx, ry, s, .9), fill: "var(--land)" });                        // land
+  S("path", { d: blob(cx - rx * .1, cy - ry * .15, rx * .55, ry * .5, s + 20, 1), fill: "var(--land-2)" });   // hills
+});
+S("text", { x: 40, y: 560, fill: "#0a3640", "font-family": "DM Serif Display", "font-size": 22, opacity: .7 }).textContent = "Bughaw Sea";
+const compass = S("g", { transform: "translate(740 540)" }); S("circle", { r: 26, fill: "#fff", opacity: .6 }, compass);
+S("path", { d: "M0 -20 L6 0 L0 20 L-6 0Z", fill: "#0a3640" }, compass); S("text", { x: -5, y: -24, "font-size": 12, fill: "#0a3640", "font-weight": 700 }, compass).textContent = "N";
+const pins = SPOTS.map((s, i) => {
+  const g = S("g", { class: "pin", tabindex: 0, role: "button", "aria-label": s[0] });
+  S("path", { d: `M${s[2]} ${s[3]} c-9 -12 -13 -18 -13 -24 a13 13 0 1 1 26 0 c0 6 -4 12 -13 24z`, fill: CATS[s[1]][1], stroke: "#fff", "stroke-width": 2.5 }, g);
+  S("circle", { cx: s[2], cy: s[3] - 24, r: 4.5, fill: "#fff" }, g);
+  g.addEventListener("click", () => show(i)); g.addEventListener("keydown", (e) => { if (e.key === "Enter") show(i); });
+  return g;
+});
+// filters
+let cat = "all"; const fEl = document.getElementById("filters");
+[["all", "Everything", "#17302f"], ...Object.entries(CATS).map(([k, [n, c]]) => [k, n, c])].forEach(([k, n, c]) => {
+  const b = document.createElement("button"); b.innerHTML = `<i style="background:${c}"></i>${n}`; b.setAttribute("aria-pressed", String(k === cat));
+  b.addEventListener("click", () => { cat = k; fEl.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); pins.forEach((p, i) => p.classList.toggle("dim", cat !== "all" && SPOTS[i][1] !== cat)); });
+  fEl.append(b);
+});
+// spot card and trip
+let cur = 0; const trip = [[], [], []];
+function show(i) {
+  cur = i; pins.forEach((p, k) => p.classList.toggle("on", k === i));
+  const [name, c, , , text, effort, time, fee] = SPOTS[i], inTrip = trip.flat().includes(i);
+  document.getElementById("spot").innerHTML = `<div class="spot"><span class="tag" style="color:${CATS[c][1]}">${CATS[c][0]}</span><h2>${name}</h2><p>${text}</p>
+    <div class="facts"><div>Effort<b>${effort}</b></div><div>Time<b>${time}</b></div><div>Entry<b>${fee}</b></div></div>
+    <button class="btn" id="add" ${inTrip ? "disabled" : ""}>${inTrip ? "In your trip" : "Add to my trip"}</button></div>`;
+  if (!inTrip) document.getElementById("add").addEventListener("click", () => { const d = trip.reduce((m, day, k) => (day.length < trip[m].length ? k : m), 0); trip[d].push(i); renderTrip(); show(i); });
+}
+function renderTrip() {
+  const n = trip.flat().length; document.getElementById("trip-sub").textContent = n ? `${n} place${n > 1 ? "s" : ""} over 3 days` : "Add places from the map; we spread them over 3 days.";
+  document.getElementById("trip").innerHTML = trip.map((day, d) => `<div class="day"><b>Day ${d + 1}</b>${day.length ? day.map((i, k) =>
+    `${k ? `<div class="leg">↓ about ${mins(SPOTS[day[k - 1]], SPOTS[i])} min</div>` : ""}<div class="stop"><span>${SPOTS[i][0]}</span><button data-d="${d}" data-i="${i}" aria-label="Remove ${SPOTS[i][0]}">×</button></div>`).join("") : '<div class="empty">Free day</div>'}</div>`).join("");
+  document.querySelectorAll("#trip [data-d]").forEach((b) => b.addEventListener("click", () => { const d = +b.dataset.d; trip[d] = trip[d].filter((x) => x !== +b.dataset.i); renderTrip(); show(cur); }));
+}
+// seasons
+const M = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], SEA = ["calm", "calm", "calm", "dry", "dry", "rain", "rain", "rain", "rain", "rain", "calm", "calm"];
+const COL = { calm: "#2aa198", dry: "#e9c46a", rain: "#9fb7c4" };
+document.getElementById("months").innerHTML = M.map((m, i) => `<div><i style="background:${COL[SEA[i]]}"></i>${m}</div>`).join("");
+[0, 4, 8].forEach((i, d) => trip[d].push(i)); renderTrip(); show(1);
+</script>
+</body>
+</html>

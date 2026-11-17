@@ -134,7 +134,7 @@
   <section class="intro">
     <div class="kicker">PROJECTS · SCREENSHOTS</div>
     <h1>The work, up close</h1>
-    <p>Screens from the systems I build and run: water billing for local governments, weather station tools for PAGASA, a point-of-sale, a few experiments, and three concept sites with invented data. Click any screenshot to see it full size.</p>
+    <p>Screens from the systems I build and run: water billing for local governments, weather station tools for PAGASA, a point-of-sale, a few experiments, and five concept sites with invented data. Click any screenshot to see it full size.</p>
   </section>
 </div>
 <nav class="jump" aria-label="Projects"><div id="nav"></div></nav>
@@ -255,6 +255,28 @@ const projects = [
       ["hero", "The opening: limestone, lagoon and the sea moving"],
       ["booking", "Availability calendar and the price breakdown"],
       ["rooms", "Choosing a room"]
+    ]
+  },
+  {
+    id: "tourism", title: "Bughaw Islands", sub: "Island tourism guide", meta: "Concept · fictional islands, spots and festivals", concept: true,
+    summary: "A visitor guide for a group of islands: a map of spots you can filter by kind, a 3-day trip planner with travel times between stops, the best months to go, and the festivals.",
+    link: ["concepts/tourism/", "Open the live concept"],
+    tools: ["HTML", "CSS", "JavaScript", "SVG map"],
+    dir: "tourism", shots: [
+      ["hero", "The opening"],
+      ["map", "The island map and spot filters"]
+    ]
+  },
+  {
+    id: "store", title: "Bilihan", sub: "Online marketplace", meta: "Concept · fictional store, sellers and products", concept: true,
+    summary: "An online store for local sellers: search and categories, flash deals with a countdown, product options, a cart with vouchers, and checkout with cash on delivery or e-wallets.",
+    link: ["concepts/store/", "Open the live concept"],
+    tools: ["HTML", "CSS", "JavaScript"],
+    dir: "store", shots: [
+      ["home", "Flash deals and products"],
+      ["product", "Choosing an option"],
+      ["cart", "Cart with a voucher applied"],
+      ["order", "Order placed and tracking"]
     ]
   }
 ];

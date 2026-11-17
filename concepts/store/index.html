@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bilihan · Online store concept by Nestor Igna Jr.</title>
+<meta name="description" content="A concept: an online marketplace with flash deals, categories, a cart, vouchers and checkout. Fictional store, sellers and products.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --vio: #5b2bd8; --vio-2: #ede7ff; --sun: #ffcf33; --ink: #1d1a2b; --muted: #6b6880; --bg: #f5f4fa; --card: #fff; --line: #e8e6f0; --red: #e5484d; --green: #12a150; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 "Plus Jakarta Sans", system-ui, sans-serif; }
+  .concept { background: var(--ink); color: #d9d4f5; text-align: center; font-size: 13px; padding: 6px 12px; } .concept a { color: inherit; }
+  header { background: var(--vio); color: #fff; position: sticky; top: 0; z-index: 10; }
+  header .in { max-width: 1200px; margin: 0 auto; padding: 14px 20px; display: flex; gap: 18px; align-items: center; }
+  .logo { font-weight: 800; font-size: 28px; letter-spacing: -.03em; display: flex; align-items: center; gap: 8px; }
+  .logo i { width: 34px; height: 34px; border-radius: 10px; background: var(--sun); display: grid; place-items: center; color: var(--vio); font-style: normal; font-size: 20px; }
+  .search { flex: 1; display: flex; background: #fff; border-radius: 12px; overflow: hidden; }
+  .search input { flex: 1; border: 0; padding: 12px 14px; font: inherit; color: var(--ink); outline: none; }
+  .search button { border: 0; background: var(--sun); color: var(--ink); font: 700 15px inherit; padding: 0 20px; cursor: pointer; }
+  .cartbtn { position: relative; border: 0; background: rgba(255,255,255,.15); color: #fff; border-radius: 12px; padding: 10px 14px; font: 700 15px inherit; cursor: pointer; }
+  .cartbtn b { position: absolute; top: -6px; right: -6px; background: var(--sun); color: var(--ink); border-radius: 99px; font-size: 12px; min-width: 22px; height: 22px; display: grid; place-items: center; padding: 0 5px; }
+  .cartbtn b.bump { animation: bump .4s; } @keyframes bump { 50% { transform: scale(1.4); } }
+  main { max-width: 1200px; margin: 0 auto; padding: 20px; }
+  .banner { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; }
+  .b1 { border-radius: 20px; padding: 30px; color: #fff; background: linear-gradient(120deg, #5b2bd8, #9b4dff 60%, #ff7ab6); position: relative; overflow: hidden; min-height: 200px; }
+  .b1 h2 { font-size: 40px; line-height: 1; margin: 0 0 8px; letter-spacing: -.03em; } .b1 p { margin: 0; opacity: .9; font-size: 17px; }
+  .b1 .code { display: inline-block; margin-top: 16px; background: var(--sun); color: var(--ink); font-weight: 800; padding: 8px 14px; border-radius: 10px; letter-spacing: .05em; }
+  .b1 .ring { position: absolute; right: -40px; bottom: -60px; width: 260px; height: 260px; border-radius: 50%; border: 40px solid rgba(255,255,255,.15); }
+  .b2 { border-radius: 20px; padding: 24px; background: var(--sun); display: flex; flex-direction: column; justify-content: center; }
+  .b2 b { font-size: 26px; letter-spacing: -.02em; line-height: 1.1; } .b2 span { color: #5c4a00; }
+  .cats { display: flex; gap: 10px; overflow-x: auto; padding: 18px 0 6px; }
+  .cats button { flex: none; border: 1px solid var(--line); background: var(--card); border-radius: 99px; padding: 8px 16px; font: 600 14px inherit; cursor: pointer; color: var(--ink); }
+  .cats button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .sec { display: flex; align-items: baseline; justify-content: space-between; margin: 22px 0 12px; }
+  .sec h3 { margin: 0; font-size: 22px; letter-spacing: -.02em; display: flex; align-items: center; gap: 12px; }
+  .clock { display: flex; gap: 4px; } .clock span { background: var(--ink); color: #fff; border-radius: 6px; padding: 2px 7px; font-variant-numeric: tabular-nums; font-size: 15px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(178px, 1fr)); gap: 12px; }
+  .p { background: var(--card); border-radius: 16px; overflow: hidden; border: 1px solid var(--line); cursor: pointer; transition: transform .2s, box-shadow .2s; text-align: left; padding: 0; font: inherit; color: inherit; }
+  .p:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(29, 26, 43, .1); }
+  .p .img { aspect-ratio: 1; display: block; width: 100%; }
+  .p .t { padding: 10px 12px 12px; }
+  .p .n { font-size: 14px; line-height: 1.35; height: 2.7em; overflow: hidden; }
+  .p .pr { font-weight: 800; color: var(--vio); font-size: 17px; margin-top: 6px; }
+  .p .was { color: var(--muted); text-decoration: line-through; font-size: 12px; margin-left: 6px; font-weight: 500; }
+  .p .meta { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .off { position: absolute; top: 8px; left: 8px; background: var(--red); color: #fff; font-size: 12px; font-weight: 800; padding: 2px 7px; border-radius: 6px; }
+  .bar { height: 6px; background: #ffe2e3; border-radius: 3px; overflow: hidden; margin-top: 6px; } .bar i { display: block; height: 100%; background: var(--red); }
+  .wrapimg { position: relative; }
+  /* drawers and dialogs */
+  .dim { position: fixed; inset: 0; background: rgba(20, 16, 40, .45); z-index: 20; display: none; } .dim.on { display: block; }
+  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100vw); background: #fff; z-index: 21; transform: translateX(105%); transition: transform .35s cubic-bezier(.2, .9, .2, 1); display: flex; flex-direction: column; }
+  .drawer.on { transform: none; }
+  .drawer .hd { padding: 18px 20px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 19px; }
+  .x { border: 0; background: var(--bg); border-radius: 50%; width: 36px; height: 36px; font-size: 18px; cursor: pointer; }
+  .drawer .body { flex: 1; overflow: auto; padding: 14px 20px; }
+  .ci { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .ci svg { width: 64px; height: 64px; border-radius: 10px; }
+  .qty { display: flex; align-items: center; gap: 8px; } .qty button { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
+  .drawer .ft { padding: 16px 20px 20px; border-top: 1px solid var(--line); }
+  .row { display: flex; justify-content: space-between; padding: 4px 0; } .row.tot { font-weight: 800; font-size: 20px; padding-top: 8px; } .row.tot span:last-child { color: var(--vio); }
+  .vou { display: flex; gap: 8px; margin: 8px 0; } .vou input { flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; font: inherit; text-transform: uppercase; }
+  .vou button, .go { border: 0; border-radius: 10px; font: 700 15px inherit; cursor: pointer; }
+  .vou button { background: var(--vio-2); color: var(--vio); padding: 0 14px; }
+  .go { width: 100%; background: var(--vio); color: #fff; padding: 14px; font-size: 17px; margin-top: 10px; } .go:disabled { opacity: .5; cursor: not-allowed; }
+  .msg { font-size: 13px; } .msg.ok { color: var(--green); } .msg.bad { color: var(--red); }
+  .pay { display: grid; gap: 8px; margin: 10px 0; } .pay label { display: flex; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; cursor: pointer; }
+  .pay input { accent-color: var(--vio); }
+  dialog { border: 0; border-radius: 22px; padding: 0; width: min(760px, 94vw); }
+  dialog::backdrop { background: rgba(20, 16, 40, .5); }
+  .pd { display: grid; grid-template-columns: 1fr 1fr; } .pd svg { width: 100%; height: 100%; display: block; } .pd .t { padding: 24px; }
+  .pd h4 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.02em; } .pd .pr { font-size: 26px; font-weight: 800; color: var(--vio); }
+  .var { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 16px; } .var button { border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 7px 12px; cursor: pointer; font: inherit; }
+  .var button[aria-pressed="true"] { border-color: var(--vio); color: var(--vio); background: var(--vio-2); font-weight: 700; }
+  .seller { font-size: 13px; color: var(--muted); }
+  .track { list-style: none; padding: 0; margin: 14px 0 0; } .track li { padding: 6px 0 6px 26px; position: relative; color: var(--muted); }
+  .track li::before { content: ""; position: absolute; left: 4px; top: 12px; width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+  .track li.on { color: var(--ink); font-weight: 700; } .track li.on::before { background: var(--green); }
+  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 30px 20px 40px; }
+  @media (max-width: 760px) { .banner, .pd { grid-template-columns: 1fr; } .logo span { display: none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="concept">Concept · fictional store, sellers and products · nothing is sold · <a href="../../projects.html#store">by Nestor Igna Jr.</a></div>
+<header><div class="in">
+  <div class="logo"><i>b</i><span>bilihan</span></div>
+  <form class="search" id="sform"><input id="q" placeholder="Search for coffee, slippers, phone cases…" aria-label="Search products"><button>Search</button></form>
+  <button class="cartbtn" id="cartbtn">Cart <b id="cnt">0</b></button>
+</div></header>
+<main>
+  <div class="banner">
+    <div class="b1"><div class="ring"></div><h2>Payday sale</h2><p>Up to 60% off from local sellers across the islands.</p><span class="code">BILIHAN50 · ₱50 off ₱500</span></div>
+    <div class="b2"><b>Free shipping</b><span>on orders over ₱999. Cash on delivery available.</span></div>
+  </div>
+  <div class="cats" id="cats"></div>
+  <div class="sec"><h3>Flash deals <span class="clock" id="clock"></span></h3></div>
+  <div class="grid" id="flash"></div>
+  <div class="sec"><h3 id="all-title">For you</h3></div>
+  <div class="grid" id="all"></div>
+</main>
+<footer>A concept for an online marketplace. Bilihan, its sellers, products and prices are invented; no order is placed.</footer>
+
+<div class="dim" id="dim"></div>
+<aside class="drawer" id="drawer" aria-label="Cart"><div class="hd"><span id="dr-title">Your cart</span><button class="x" id="close" aria-label="Close">×</button></div><div class="body" id="dr-body"></div><div class="ft" id="dr-ft"></div></aside>
+<dialog id="pd"></dialog>
+
+<script>
+const peso = (n) => "₱" + n.toLocaleString("en-PH");
+// product art: a simple drawing per kind, on a soft colour
+const ART = {
+  mug: (c) => `<rect x="60" y="62" width="70" height="80" rx="10" fill="${c}"/><path d="M130 80 h12 a14 14 0 0 1 0 28 h-12" stroke="${c}" stroke-width="9" fill="none"/><path d="M80 50 q6 -10 0 -18 M98 50 q6 -10 0 -18" stroke="#b9a9e8" stroke-width="4" fill="none"/>`,
+  shirt: (c) => `<path d="M62 60 l22 -14 h32 l22 14 l14 26 l-18 8 v52 h-68 v-52 l-18 -8z" fill="${c}"/>`,
+  slipper: (c) => `<ellipse cx="100" cy="110" rx="58" ry="26" fill="${c}"/><path d="M68 104 q32 -32 64 0" stroke="#fff" stroke-width="8" fill="none"/>`,
+  phone: (c) => `<rect x="70" y="40" width="60" height="112" rx="12" fill="${c}"/><rect x="77" y="52" width="46" height="84" rx="4" fill="#fff" opacity=".6"/>`,
+  bag: (c) => `<rect x="58" y="72" width="84" height="74" rx="10" fill="${c}"/><path d="M80 72 v-12 a20 20 0 0 1 40 0 v12" stroke="${c}" stroke-width="8" fill="none"/>`,
+  bottle: (c) => `<rect x="82" y="34" width="36" height="16" rx="4" fill="#555"/><rect x="72" y="50" width="56" height="102" rx="16" fill="${c}"/>`,
+  snack: (c) => `<path d="M64 52 h72 l-6 100 h-60z" fill="${c}"/><rect x="74" y="80" width="52" height="24" rx="6" fill="#fff" opacity=".7"/>`,
+  fan: (c) => `<circle cx="100" cy="88" r="44" fill="none" stroke="${c}" stroke-width="6"/><path d="M100 88 l0 -36 a20 20 0 0 1 0 36 l31 18 a20 20 0 0 1 -31 -18 l-31 18 a20 20 0 0 1 31 -18" fill="${c}"/><rect x="94" y="130" width="12" height="20" fill="${c}"/>`,
+};
+const P = [
+  ["Barako coffee, 500 g, roasted in Batangas", "Food", "snack", "#7b4a2a", 320, 450, 4.9, 2300],
+  ["Ceramic mug, 350 ml, hand-painted", "Home", "mug", "#5b8def", 189, 250, 4.8, 860],
+  ["Abaca-strap slippers", "Fashion", "slipper", "#d9a441", 249, 399, 4.7, 5100],
+  ["Shock-proof phone case", "Gadgets", "phone", "#2bb3a3", 99, 199, 4.6, 12000],
+  ["Native woven tote bag", "Fashion", "bag", "#c46b3d", 399, 650, 4.8, 1800],
+  ["Insulated tumbler, 750 ml", "Home", "bottle", "#5b2bd8", 299, 480, 4.9, 7400],
+  ["Dried mangoes, 3 packs", "Food", "snack", "#f2a33a", 210, 285, 4.9, 15000],
+  ["Desk fan, quiet, 3 speeds", "Gadgets", "fan", "#7d8fa8", 699, 1199, 4.5, 920],
+  ["Plain cotton shirt", "Fashion", "shirt", "#3d4c6b", 179, 299, 4.6, 6300],
+  ["Kapeng barako drip bags, 10s", "Food", "snack", "#3e2a1e", 159, 199, 4.8, 3400],
+  ["Bamboo-print shirt", "Fashion", "shirt", "#2f8a5b", 229, 349, 4.7, 2100],
+  ["Glass water bottle, 1 L", "Home", "bottle", "#7fc6e8", 149, 220, 4.6, 4300],
+];
+const ITEMS = P.map(([n, cat, kind, col, price, was, rating, sold], i) => ({ i, n, cat, kind, col, price, was, rating, sold, seller: ["Isla Goods", "Tindahan ni Aling Rosa", "Palawan Crafts", "Gadget Hub PH"][i % 4] }));
+const art = (it, size = 200) => `<svg class="img" viewBox="0 0 200 200" width="${size}" height="${size}"><rect width="200" height="200" fill="${it.col}22"/>${ART[it.kind](it.col)}</svg>`;
+const cart = new Map(); let voucher = null, cat = "All", q = "";
+
+function card(it, flash) {
+  const b = document.createElement("button"); b.className = "p"; b.type = "button";
+  const off = Math.round((1 - it.price / it.was) * 100), left = 20 + (it.i * 13) % 70;
+  b.innerHTML = `<div class="wrapimg">${art(it)}<span class="off">−${off}%</span></div><div class="t"><div class="n"></div>
+    <div class="pr">${peso(it.price)}<span class="was">${peso(it.was)}</span></div>
+    ${flash ? `<div class="bar"><i style="width:${100 - left}%"></i></div><div class="meta"><span>${left} left</span></div>` : `<div class="meta"><span>★ ${it.rating}</span><span>${it.sold >= 1000 ? (it.sold / 1000).toFixed(1) + "k" : it.sold} sold</span></div>`}</div>`;
+  b.querySelector(".n").textContent = it.n;
+  b.addEventListener("click", () => openP(it));
+  return b;
+}
+function render() {
+  const fl = document.getElementById("flash"); fl.replaceChildren(...ITEMS.slice(0, 6).map((it) => card(it, true)));
+  const list = ITEMS.filter((it) => (cat === "All" || it.cat === cat) && it.n.toLowerCase().includes(q));
+  document.getElementById("all-title").textContent = q ? `Results for “${q}”` : cat === "All" ? "For you" : cat;
+  const all = document.getElementById("all"); all.replaceChildren(...list.map((it) => card(it)));
+  if (!list.length) all.innerHTML = `<p style="color:var(--muted)">Nothing found. Try “coffee” or “shirt”.</p>`;
+}
+const cats = document.getElementById("cats");
+["All", "Food", "Fashion", "Home", "Gadgets"].forEach((c) => { const b = document.createElement("button"); b.textContent = c; b.setAttribute("aria-pressed", String(c === cat));
+  b.addEventListener("click", () => { cat = c; cats.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); render(); }); cats.append(b); });
+document.getElementById("sform").addEventListener("submit", (e) => { e.preventDefault(); q = document.getElementById("q").value.trim().toLowerCase(); render(); });
+// flash deal clock: counts down to the top of the next hour
+function tick() { const n = new Date(), s = 3599 - (n.getMinutes() * 60 + n.getSeconds()); const p = (v) => String(v).padStart(2, "0");
+  document.getElementById("clock").innerHTML = `<span>00</span><span>${p(Math.floor(s / 60))}</span><span>${p(s % 60)}</span>`; }
+tick(); setInterval(tick, 1000);
+// product dialog
+const dlg = document.getElementById("pd");
+function openP(it) {
+  const sizes = it.kind === "shirt" ? ["S", "M", "L", "XL"] : it.kind === "slipper" ? ["37", "38", "39", "40", "41"] : ["Standard"];
+  let v = sizes[0];
+  dlg.innerHTML = `<div class="pd">${art(it, 380)}<div class="t"><button class="x" style="float:right" aria-label="Close">×</button><h4></h4>
+    <div class="seller">Sold by ${it.seller} · ★ ${it.rating} · ${it.sold.toLocaleString()} sold</div>
+    <p class="pr">${peso(it.price)} <span class="was" style="font-size:15px;color:var(--muted);text-decoration:line-through">${peso(it.was)}</span></p>
+    <div><b>Option</b></div><div class="var">${sizes.map((s) => `<button aria-pressed="${s === v}">${s}</button>`).join("")}</div>
+    <button class="go" id="addc">Add to cart</button></div></div>`;
+  dlg.querySelector("h4").textContent = it.n;
+  dlg.querySelectorAll(".var button").forEach((b) => b.addEventListener("click", () => { v = b.textContent; dlg.querySelectorAll(".var button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); }));
+  dlg.querySelector(".x").addEventListener("click", () => dlg.close());
+  dlg.querySelector("#addc").addEventListener("click", () => { const k = it.i + "|" + v; cart.set(k, { it, v, n: (cart.get(k)?.n || 0) + 1 }); dlg.close(); count(); });
+  dlg.showModal();
+}
+function count() { const n = [...cart.values()].reduce((s, c) => s + c.n, 0), b = document.getElementById("cnt"); b.textContent = n; b.classList.remove("bump"); void b.offsetWidth; b.classList.add("bump"); }
+// cart drawer, voucher, checkout, order placed
+const drawer = document.getElementById("drawer"), dim = document.getElementById("dim");
+const openD = () => { drawer.classList.add("on"); dim.classList.add("on"); showCart(); }, closeD = () => { drawer.classList.remove("on"); dim.classList.remove("on"); };
+document.getElementById("cartbtn").addEventListener("click", openD); document.getElementById("close").addEventListener("click", closeD); dim.addEventListener("click", closeD);
+function totals() { const sub = [...cart.values()].reduce((s, c) => s + c.it.price * c.n, 0), ship = sub >= 999 || !sub ? 0 : 58, off = voucher && sub >= 500 ? 50 : 0; return { sub, ship, off, tot: sub + ship - off }; }
+function showCart() {
+  document.getElementById("dr-title").textContent = "Your cart";
+  const body = document.getElementById("dr-body"), ft = document.getElementById("dr-ft");
+  if (!cart.size) { body.innerHTML = `<p style="color:var(--muted)">Your cart is empty. Tap a product to add it.</p>`; ft.innerHTML = ""; return; }
+  body.replaceChildren(...[...cart.entries()].map(([k, c]) => { const r = document.createElement("div"); r.className = "ci";
+    r.innerHTML = `${art(c.it, 64)}<div><div style="font-size:14px"></div><small style="color:var(--muted)">${c.v} · ${peso(c.it.price)}</small></div><div class="qty"><button aria-label="Less">−</button>${c.n}<button aria-label="More">+</button></div>`;
+    r.querySelector("div div").textContent = c.it.n;
+    const [m, p] = r.querySelectorAll(".qty button");
+    m.addEventListener("click", () => { c.n--; if (!c.n) cart.delete(k); count(); showCart(); }); p.addEventListener("click", () => { c.n++; count(); showCart(); });
+    return r; }));
+  const t = totals();
+  ft.innerHTML = `<div class="vou"><input id="vc" placeholder="Voucher code" value="${voucher || ""}"><button id="va">Apply</button></div><div class="msg" id="vm"></div>
+    <div class="row"><span>Subtotal</span><span>${peso(t.sub)}</span></div><div class="row"><span>Shipping</span><span>${t.ship ? peso(t.ship) : "Free"}</span></div>
+    ${t.off ? `<div class="row" style="color:var(--green)"><span>Voucher</span><span>−${peso(t.off)}</span></div>` : ""}<div class="row tot"><span>Total</span><span>${peso(t.tot)}</span></div>
+    <button class="go" id="checkout">Check out</button>`;
+  if (voucher) document.getElementById("vm").innerHTML = t.off ? `<span class="msg ok">BILIHAN50 applied.</span>` : `<span class="msg bad">BILIHAN50 needs ₱500 or more.</span>`;
+  document.getElementById("va").addEventListener("click", () => { const c = document.getElementById("vc").value.trim().toUpperCase(); if (c === "BILIHAN50") { voucher = c; showCart(); } else document.getElementById("vm").innerHTML = `<span class="msg bad">That code doesn't exist. Try BILIHAN50.</span>`; });
+  document.getElementById("checkout").addEventListener("click", checkout);
+}
+function checkout() {
+  document.getElementById("dr-title").textContent = "Checkout";
+  const t = totals();
+  document.getElementById("dr-body").innerHTML = `<b>Deliver to</b><p style="margin:4px 0 14px;color:var(--muted)">Juan Dela Cruz · 0917 000 0000<br>Purok 3, Barangay Masagana, Puerto Princesa City</p>
+    <b>Pay with</b><div class="pay">${["Cash on delivery", "GCash", "Maya", "Credit or debit card"].map((p, i) => `<label><input type="radio" name="pay" ${i ? "" : "checked"}>${p}</label>`).join("")}</div>`;
+  document.getElementById("dr-ft").innerHTML = `<div class="row tot"><span>Total</span><span>${peso(t.tot)}</span></div><button class="go" id="place">Place order</button>`;
+  document.getElementById("place").addEventListener("click", () => {
+    const id = "BLH-" + (t.tot * 7 % 100000).toString().padStart(5, "0");
+    cart.clear(); voucher = null; count();
+    document.getElementById("dr-title").textContent = "Order placed";
+    document.getElementById("dr-body").innerHTML = `<div style="text-align:center;padding:10px 0"><div style="font-size:46px">✓</div><b style="font-size:20px">Thank you!</b><p style="color:var(--muted)">Order ${id} · ${peso(t.tot)}</p></div>
+      <ul class="track"><li class="on">Order placed</li><li>Seller is packing it</li><li>Picked up by the courier</li><li>Out for delivery</li><li>Delivered</li></ul>
+      <p style="color:var(--muted);font-size:13px">A concept: no order was placed and nothing was charged.</p>`;
+    document.getElementById("dr-ft").innerHTML = `<button class="go" id="shop">Keep shopping</button>`;
+    document.getElementById("shop").addEventListener("click", closeD);
+  });
+}
+render();
+</script>
+</body>
+</html>
