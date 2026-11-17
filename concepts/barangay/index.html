@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barangay e-Serbisyo · Concept by Nestor Igna Jr.</title>
+<meta name="description" content="A concept: a barangay e-services portal where residents request clearances and certificates online, track them with a code, and staff work a queue. Fictional barangay and data.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --green: #14532d; --green-2: #1f7a45; --sun: #f2b705; --paper: #f7f5ef; --card: #fff; --ink: #1c2a22; --muted: #5d6b62; --line: #e3e0d4; --red: #b42318; }
+  @media (prefers-color-scheme: dark) { :root { --paper: #0f1a14; --card: #16241c; --ink: #e8efe9; --muted: #9db0a3; --line: #26382d; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 "Public Sans", system-ui, sans-serif; }
+  .concept { background: var(--sun); color: #2a2200; text-align: center; font-size: 13px; font-weight: 600; padding: 6px 12px; }
+  .concept a { color: inherit; }
+  header.bar { background: var(--green); color: #fff; }
+  header .in { max-width: 1080px; margin: 0 auto; padding: 18px 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .seal { width: 54px; height: 54px; flex: none; }
+  header h1 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -.01em; line-height: 1.15; }
+  header small { display: block; font-weight: 500; opacity: .8; font-size: 13px; }
+  .tabs { margin-left: auto; display: flex; gap: 4px; background: rgba(255,255,255,.1); padding: 4px; border-radius: 12px; }
+  .tabs button { border: 0; background: none; color: #fff; font: 600 14px "Public Sans", sans-serif; padding: 8px 14px; border-radius: 9px; cursor: pointer; }
+  .tabs button[aria-selected="true"] { background: #fff; color: var(--green); }
+  main { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
+  .view[hidden] { display: none; }
+  h2 { font-size: 28px; margin: 0 0 6px; letter-spacing: -.02em; }
+  .lede { color: var(--muted); margin: 0 0 22px; max-width: 62ch; }
+  .steps { display: flex; gap: 8px; margin: 0 0 22px; padding: 0; list-style: none; flex-wrap: wrap; }
+  .steps li { font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 99px; background: var(--card); border: 1px solid var(--line); color: var(--muted); }
+  .steps li.on { background: var(--green); border-color: var(--green); color: #fff; }
+  .steps li.done { color: var(--green-2); border-color: var(--green-2); }
+  .docs { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+  .doc { text-align: left; background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 18px; cursor: pointer; font: inherit; color: inherit; transition: border-color .2s, transform .2s; }
+  .doc:hover { transform: translateY(-2px); border-color: var(--green-2); }
+  .doc[aria-pressed="true"] { border-color: var(--green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 20%, transparent); }
+  .doc b { display: block; font-size: 17px; margin-bottom: 4px; }
+  .doc span { color: var(--muted); font-size: 14px; }
+  .doc .fee { display: flex; justify-content: space-between; margin-top: 12px; font-size: 13px; font-weight: 600; }
+  .doc .fee em { font-style: normal; color: var(--green-2); }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+  label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  input, select, textarea { width: 100%; font: inherit; color: inherit; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+  input:focus, select:focus, textarea:focus, button:focus-visible { outline: 3px solid color-mix(in srgb, var(--sun) 70%, transparent); outline-offset: 1px; }
+  .full { grid-column: 1 / -1; }
+  .actions { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
+  .btn { font: 700 15px "Public Sans", sans-serif; border-radius: 10px; padding: 11px 20px; cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--ink); }
+  .btn.go { background: var(--green); border-color: var(--green); color: #fff; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .review dt { color: var(--muted); font-size: 13px; } .review dd { margin: 0 0 12px; font-weight: 600; }
+  .ticket { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center; background: var(--card); border: 2px dashed var(--green-2); border-radius: 18px; padding: 22px; animation: pop .5s cubic-bezier(.2, 1.4, .4, 1); }
+  @keyframes pop { from { transform: scale(.94); opacity: 0; } }
+  .code { font-family: "IBM Plex Mono", monospace; font-size: 30px; font-weight: 600; letter-spacing: .04em; color: var(--green); }
+  .qr { width: 132px; height: 132px; background: #fff; padding: 8px; border-radius: 8px; }
+  .track-form { display: flex; gap: 10px; max-width: 520px; }
+  .track-form input { font-family: "IBM Plex Mono", monospace; text-transform: uppercase; }
+  .timeline { list-style: none; margin: 22px 0 0; padding: 0; max-width: 560px; }
+  .timeline li { position: relative; padding: 0 0 20px 34px; color: var(--muted); }
+  .timeline li::before { content: ""; position: absolute; left: 8px; top: 6px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); }
+  .timeline li::after { content: ""; position: absolute; left: 14px; top: 22px; bottom: 0; width: 2px; background: var(--line); }
+  .timeline li:last-child::after { display: none; }
+  .timeline li.done { color: var(--ink); } .timeline li.done::before { background: var(--green-2); border-color: var(--green-2); }
+  .timeline li.now { color: var(--ink); font-weight: 700; } .timeline li.now::before { border-color: var(--sun); background: var(--sun); box-shadow: 0 0 0 5px color-mix(in srgb, var(--sun) 30%, transparent); }
+  .timeline small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; }
+  .note { margin-top: 10px; font-size: 14px; color: var(--muted); }
+  .err { color: var(--red); font-weight: 600; margin-top: 12px; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+  .stat b { display: block; font-size: 28px; letter-spacing: -.02em; } .stat span { font-size: 13px; color: var(--muted); }
+  .chips { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .chips button { font: 600 13px "Public Sans", sans-serif; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 99px; padding: 6px 12px; cursor: pointer; }
+  .chips button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; font-size: 14px; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: color-mix(in srgb, var(--line) 35%, var(--card)); }
+  td.mono { font-family: "IBM Plex Mono", monospace; }
+  .pill { font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
+  .s-received { background: #e7eefc; color: #1d4ed8; } .s-verified { background: #fef3c7; color: #92400e; } .s-signature { background: #ede9fe; color: #6d28d9; } .s-ready { background: #dcfce7; color: #166534; }
+  tr.flash { animation: flash 1s ease; } @keyframes flash { from { background: color-mix(in srgb, var(--sun) 35%, var(--card)); } }
+  .small { padding: 6px 12px; font-size: 13px; }
+  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 0 20px 40px; }
+  @media (max-width: 720px) { .grid2, .stats { grid-template-columns: 1fr 1fr; } .grid2 > * { grid-column: 1 / -1; } .ticket { grid-template-columns: 1fr; justify-items: center; text-align: center; } .tabs { margin-left: 0; } table .hide-sm { display: none; } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="concept">Concept · fictional barangay and data · not a client project · <a href="../../projects.html#barangay">by Nestor Igna Jr.</a></div>
+<header class="bar"><div class="in">
+  <svg class="seal" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#fff"/><circle cx="32" cy="32" r="26" fill="none" stroke="#14532d" stroke-width="2"/>
+    <g fill="#f2b705"><circle cx="32" cy="30" r="8"/><g stroke="#f2b705" stroke-width="2.5" stroke-linecap="round">
+    <path d="M32 15v5M32 40v5M17 30h5M42 30h5M21.4 19.4l3.5 3.5M39.1 37.1l3.5 3.5M21.4 40.6l3.5-3.5M39.1 22.9l3.5-3.5"/></g></g>
+    <path d="M14 46c6-4 12-4 18 0s12 4 18 0" fill="none" stroke="#1f7a45" stroke-width="3" stroke-linecap="round"/></svg>
+  <h1>Barangay Masagana e-Serbisyo<small>Municipality of Sampaguita (fictional)</small></h1>
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" aria-selected="true" data-v="request">Request</button>
+    <button role="tab" aria-selected="false" data-v="track">Track</button>
+    <button role="tab" aria-selected="false" data-v="staff">Staff queue</button>
+  </nav>
+</div></header>
+
+<main>
+  <!-- REQUEST -->
+  <section class="view" id="v-request">
+    <h2>Request a document</h2>
+    <p class="lede">Apply online, pay at the barangay hall on pickup, and follow your request with a tracking code. No more waiting in line just to ask.</p>
+    <ol class="steps" id="steps"><li class="on">1 · Document</li><li>2 · Your details</li><li>3 · Review</li><li>4 · Tracking code</li></ol>
+    <div id="s1">
+      <div class="docs" id="docs"></div>
+      <div class="actions"><span></span><button class="btn go" id="to2" disabled>Next: your details</button></div>
+    </div>
+    <div id="s2" hidden>
+      <form class="panel grid2" id="form" novalidate>
+        <div><label for="f-name">Full name</label><input id="f-name" autocomplete="name" required placeholder="Juan Dela Cruz"></div>
+        <div><label for="f-bday">Date of birth</label><input id="f-bday" type="date" required></div>
+        <div><label for="f-purok">Purok</label><select id="f-purok" required><option value="">Choose your purok</option><option>Purok 1 · Mabini</option><option>Purok 2 · Rizal</option><option>Purok 3 · Bonifacio</option><option>Purok 4 · Luna</option><option>Purok 5 · Silang</option></select></div>
+        <div><label for="f-years">Years living in the barangay</label><input id="f-years" type="number" min="0" max="99" required placeholder="5"></div>
+        <div class="full"><label for="f-purpose">Purpose</label><select id="f-purpose" required><option value="">Choose a purpose</option><option>Employment</option><option>Scholarship</option><option>Bank or loan</option><option>Police clearance</option><option>Medical assistance</option><option>Other</option></select></div>
+        <div class="full"><label for="f-phone">Mobile number, for an SMS when it is ready</label><input id="f-phone" inputmode="tel" required placeholder="0917 123 4567"></div>
+      </form>
+      <p class="err" id="err" hidden>Please fill in every field.</p>
+      <div class="actions"><button class="btn" data-back="1">Back</button><button class="btn go" id="to3">Review</button></div>
+    </div>
+    <div id="s3" hidden>
+      <div class="panel"><dl class="review grid2" id="review"></dl></div>
+      <div class="actions"><button class="btn" data-back="2">Edit</button><button class="btn go" id="submit">Submit request</button></div>
+    </div>
+    <div id="s4" hidden>
+      <div class="ticket" id="ticket"></div>
+      <div class="actions"><button class="btn" id="again">Request another</button><button class="btn go" id="gotrack">Track this request</button></div>
+    </div>
+  </section>
+
+  <!-- TRACK -->
+  <section class="view" id="v-track" hidden>
+    <h2>Track a request</h2>
+    <p class="lede">Enter the code from your ticket. Try <button class="btn small" id="demo-code" type="button">BMS-2611-0427</button></p>
+    <form class="track-form" id="track"><input id="t-code" aria-label="Tracking code" placeholder="BMS-0000-0000" autocomplete="off"><button class="btn go">Track</button></form>
+    <div id="t-out"></div>
+  </section>
+
+  <!-- STAFF -->
+  <section class="view" id="v-staff" hidden>
+    <h2>Staff queue</h2>
+    <p class="lede">What the barangay secretary sees: today's requests, moved along with one click. The resident's tracking page updates at the same time.</p>
+    <div class="stats" id="stats"></div>
+    <div class="chips" id="chips"></div>
+    <table><thead><tr><th>Code</th><th>Resident</th><th class="hide-sm">Document</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+  </section>
+</main>
+<footer>A concept for a local government e-service, built to show the flow. The barangay, residents and requests are invented.</footer>
+
+<script>
+const DOCS = [
+  { id: "clr", name: "Barangay clearance", why: "For employment, loans and police clearance", fee: 50, days: "Same day" },
+  { id: "res", name: "Certificate of residency", why: "Proof that you live in the barangay", fee: 30, days: "Same day" },
+  { id: "ind", name: "Certificate of indigency", why: "For medical or educational assistance", fee: 0, days: "1 day" },
+  { id: "bus", name: "Business clearance", why: "For a new or renewed business permit", fee: 300, days: "2 days" },
+];
+const STAGES = [["received", "Received", "Your request is in the queue"], ["verified", "Verified", "Details checked against the barangay records"], ["signature", "For signature", "Waiting for the Punong Barangay's signature"], ["ready", "Ready for pickup", "Bring a valid ID and pay at the barangay hall"]];
+const peso = (n) => (n ? `₱${n}` : "Free");
+// a small seeded queue, so the demo looks lived-in and is the same on every visit
+const NAMES = ["Maria Santos", "Jose Reyes", "Ana Villanueva", "Mark Bautista", "Liza Ramos", "Paolo Garcia", "Grace Mendoza", "Rico Aquino", "Joy Navarro"];
+let queue = NAMES.map((n, i) => ({ code: `BMS-26${11 + (i % 2)}-0${420 + i * 7}`, name: n, doc: DOCS[i % 4], stage: [0, 1, 2, 3, 1, 0, 2, 3, 0][i], at: `8:${String(5 + i * 6).padStart(2, "0")} AM` }));
+queue[1].code = "BMS-2611-0427";
+
+// tabs
+const tabs = [...document.querySelectorAll(".tabs button")];
+function view(v) { tabs.forEach((b) => b.setAttribute("aria-selected", String(b.dataset.v === v))); document.querySelectorAll(".view").forEach((s) => (s.hidden = s.id !== "v-" + v)); if (v === "staff") renderStaff(); }
+tabs.forEach((b) => b.addEventListener("click", () => view(b.dataset.v)));
+
+// request flow
+let pick = null;
+const docsEl = document.getElementById("docs");
+DOCS.forEach((d) => {
+  const b = document.createElement("button");
+  b.className = "doc"; b.type = "button"; b.setAttribute("aria-pressed", "false");
+  b.innerHTML = `<b>${d.name}</b><span>${d.why}</span><div class="fee"><em>${peso(d.fee)}</em><span>${d.days}</span></div>`;
+  b.addEventListener("click", () => { pick = d; docsEl.querySelectorAll(".doc").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); document.getElementById("to2").disabled = false; });
+  docsEl.append(b);
+});
+function step(n) {
+  for (let i = 1; i <= 4; i++) document.getElementById("s" + i).hidden = i !== n;
+  [...document.getElementById("steps").children].forEach((li, i) => { li.className = i + 1 === n ? "on" : i + 1 < n ? "done" : ""; });
+}
+document.getElementById("to2").addEventListener("click", () => step(2));
+document.querySelectorAll("[data-back]").forEach((b) => b.addEventListener("click", () => step(+b.dataset.back)));
+const val = (id) => document.getElementById(id).value.trim();
+document.getElementById("to3").addEventListener("click", () => {
+  const ok = ["f-name", "f-bday", "f-purok", "f-years", "f-purpose", "f-phone"].every((id) => val(id));
+  document.getElementById("err").hidden = ok; if (!ok) return;
+  const rows = [["Document", pick.name], ["Fee", peso(pick.fee) + " · pay on pickup"], ["Name", val("f-name")], ["Purok", val("f-purok")], ["Purpose", val("f-purpose")], ["SMS to", val("f-phone")]];
+  document.getElementById("review").innerHTML = rows.map(([k, v]) => `<div><dt>${k}</dt><dd></dd></div>`).join("");
+  document.querySelectorAll("#review dd").forEach((dd, i) => (dd.textContent = rows[i][1]));
+  step(3);
+});
+function hash(s) { let h = 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; }
+function qr(code) {   // a QR-looking pattern drawn from the code (illustration, not a scannable QR)
+  let h = hash(code), cells = "";
+  const N = 21, finder = (x, y) => (x < 7 && y < 7) || (x > 13 && y < 7) || (x < 7 && y > 13);
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+    let on;
+    if (finder(x, y)) { const fx = x > 13 ? x - 14 : x, fy = y > 13 ? y - 14 : y; on = fx === 0 || fx === 6 || fy === 0 || fy === 6 || (fx > 1 && fx < 5 && fy > 1 && fy < 5); }
+    else { h = Math.imul(h ^ (h >>> 13), 1274126177) >>> 0; on = (h & 7) < 3; }
+    if (on) cells += `<rect x="${x}" y="${y}" width="1" height="1"/>`;
+  }
+  return `<svg class="qr" viewBox="0 0 21 21" shape-rendering="crispEdges" aria-label="Ticket pattern"><g fill="#14532d">${cells}</g></svg>`;
+}
+let lastCode = "";
+document.getElementById("submit").addEventListener("click", () => {
+  const n = 431 + queue.length;
+  lastCode = `BMS-2611-0${n}`;
+  queue.unshift({ code: lastCode, name: val("f-name"), doc: pick, stage: 0, at: "Just now" });
+  const t = document.getElementById("ticket");
+  t.innerHTML = `${qr(lastCode)}<div><div style="font-size:14px;color:var(--muted)">Your tracking code</div><div class="code">${lastCode}</div>
+    <p style="margin:8px 0 0"><b></b> · ${peso(pick.fee)} on pickup · ${pick.days}</p><p class="note">Keep this code. We'll also send an SMS when it is ready for pickup.</p></div>`;
+  t.querySelector("b").textContent = pick.name;
+  step(4);
+});
+document.getElementById("again").addEventListener("click", () => { document.getElementById("form").reset(); pick = null; document.getElementById("to2").disabled = true; docsEl.querySelectorAll(".doc").forEach((x) => x.setAttribute("aria-pressed", "false")); step(1); });
+document.getElementById("gotrack").addEventListener("click", () => { view("track"); document.getElementById("t-code").value = lastCode; track(lastCode); });
+
+// tracking
+function track(code) {
+  const out = document.getElementById("t-out"), r = queue.find((q) => q.code === code.trim().toUpperCase());
+  if (!r) { out.innerHTML = `<p class="err">No request found for that code. Check the letters and numbers on your ticket.</p>`; return; }
+  out.innerHTML = `<p style="margin:18px 0 0"><b></b> · <span class="mono"></span></p><ol class="timeline">${STAGES.map(([k, t, d], i) =>
+    `<li class="${i < r.stage ? "done" : i === r.stage ? "now" : ""}">${t}<small>${i <= r.stage ? d : "Not yet"}</small></li>`).join("")}</ol>`;
+  out.querySelector("b").textContent = r.doc.name; out.querySelector(".mono").textContent = r.code;
+}
+document.getElementById("track").addEventListener("submit", (e) => { e.preventDefault(); track(val("t-code")); });
+document.getElementById("demo-code").addEventListener("click", () => { document.getElementById("t-code").value = "BMS-2611-0427"; track("BMS-2611-0427"); });
+
+// staff queue
+let filter = -1;
+const chipsEl = document.getElementById("chips");
+[["All", -1], ...STAGES.map(([, t], i) => [t, i])].forEach(([t, i]) => {
+  const b = document.createElement("button"); b.textContent = t; b.setAttribute("aria-pressed", String(i === -1));
+  b.addEventListener("click", () => { filter = i; chipsEl.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); renderStaff(); });
+  chipsEl.append(b);
+});
+function renderStaff(flash) {
+  document.getElementById("stats").innerHTML = STAGES.map(([k, t], i) => `<div class="stat"><b>${queue.filter((q) => q.stage === i).length}</b><span>${t}</span></div>`).join("");
+  const tb = document.getElementById("rows"); tb.replaceChildren();
+  queue.filter((q) => filter < 0 || q.stage === filter).forEach((q) => {
+    const tr = document.createElement("tr"); if (q.code === flash) tr.className = "flash";
+    const [k, t] = STAGES[q.stage];
+    tr.innerHTML = `<td class="mono"></td><td><b></b><br><small style="color:var(--muted)">${q.at}</small></td><td class="hide-sm"></td><td><span class="pill s-${k}">${t}</span></td><td></td>`;
+    tr.children[0].textContent = q.code; tr.querySelector("b").textContent = q.name; tr.children[2].textContent = q.doc.name;
+    if (q.stage < 3) {
+      const b = document.createElement("button"); b.className = "btn go small"; b.textContent = ["Verify", "Send for signature", "Mark ready"][q.stage];
+      b.addEventListener("click", () => { q.stage++; renderStaff(q.code); }); tr.lastChild.append(b);
+    } else tr.lastChild.innerHTML = `<small style="color:var(--muted)">SMS sent</small>`;
+    tb.append(tr);
+  });
+}
+</script>
+</body>
+</html>
